@@ -3,18 +3,18 @@ Created on 2020/05/03
 
 @author: ukai
 '''
+import shutil
 import unittest
-import numpy as np
+
 from ConcAction import ConcAction
 from ConcAgent import ConcAgent
-import tensorflow as tf
-from framework import ObservationSequence, AgentMemento
-from ConcObservation import ConcObservation
-import shutil
 from ConcAgentFactory import ConcAgentFactory
-from ConcBuildOrder import ConcBuildOrder
 from ConcAgentMemento import ConcAgentMemento
-import json
+from ConcBuildOrder import ConcBuildOrder
+from ConcObservation import ConcObservation
+from framework import ObservationSequence, AgentMemento
+import numpy as np
+import tensorflow as tf
 
 
 class Test(unittest.TestCase):
@@ -22,41 +22,44 @@ class Test(unittest.TestCase):
 
     def test001(self):
         nBatch = 2**5
-        nLevers = 10
-        _pLever = tf.random.uniform(shape=(nBatch, nLevers,))
-        action = ConcAction(_pLever)
+        nMv = 10
+        _u = tf.random.uniform(shape=(nBatch, nMv,))
+        action = ConcAction(_u)
         assert isinstance(action, ConcAction)
         
     def test002(self):
-        nLevers = 10
-        agent = ConcAgent(nLevers)
+        nMv = 10
+        nPv = 3
+        nBatch = 2**5
+        agent = ConcAgent(nMv)
         
         assert isinstance(agent, ConcAgent)
         
-        action = agent(None)
+        observationSequence = ObservationSequence()
+        y = np.random.randn(nBatch, nPv).astype(np.float32)  # (*, nPv)        
+        observation = ConcObservation(y)
+        observationSequence.add(observation)
+        
+        action = agent(observationSequence)
         
         assert isinstance(action, ConcAction)
         
     def test003(self):
-        nLevers = 3
-        _pLever = tf.ones(shape=(1, nLevers,))
-        _pLever = _pLever / tf.reduce_sum(_pLever) # (nLevers,)
-        pLever = _pLever.numpy()
         
-        A = []
-        for _ in range(2**10):
-            action = ConcAction(_pLever)        
-            selectedAction = action.getSelectedAction() # (nLevers,)
-            A.append(selectedAction)
-        Aavg = np.mean(A, axis=0)
-        # this assertion might be violated with a small probability.
-        assert np.max(np.abs(Aavg - pLever)) < 0.1
+        for _ in range(2**3):
+            nMv, nBatch = np.random.randint(2**5, size=(2,))
+            
+            _u = tf.random.normal(shape=(nBatch, nMv))
+            action = ConcAction(_u)        
+            actionOnEnvironment = action.getActionOnEnvironment() # (*, nMv)
+            
+            assert np.all((actionOnEnvironment >= -1.) & (actionOnEnvironment <= 1.))             
         
     def test004(self):
         ConcAgent.checkpointFolderPath = "./test_checkpoints"
         
-        nLevers = 10
-        agent = ConcAgent(nLevers)
+        nMv = 10
+        agent = ConcAgent(nMv)
         
         assert isinstance(agent, ConcAgent)
 
@@ -70,7 +73,7 @@ class Test(unittest.TestCase):
         agentMemento = agent.createMemento()
         assert isinstance(agentMemento, AgentMemento)
         
-        agent2 = ConcAgent(nLevers)
+        agent2 = ConcAgent(nMv)
         
         agent2.loadFromMemento(agentMemento)
                 
