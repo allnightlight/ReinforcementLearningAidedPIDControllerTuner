@@ -8,7 +8,7 @@ import os
 from ConcAction import ConcAction
 from ConcAgentMemento import ConcAgentMemento
 from Utils import Utils
-from framework import Agent
+from framework import Agent, ObservationSequence
 import tensorflow as tf
 
 
@@ -20,20 +20,24 @@ class ConcAgent(Agent, tf.keras.Model):
     checkpointFolderPath = "./checkpoint"
 
 
-    def __init__(self, nLevers):
+    def __init__(self, nMv):
         '''
         Constructor
         '''
         super(ConcAgent, self).__init__()
         
-        self._q = tf.Variable(tf.random.normal(shape=(1, nLevers,))) # (1, nLevers,)
+        self.gainP = tf.keras.layers.Dense(nMv) # (*, nPv) -> (*, nMv)
         
-    def call(self, _):
+    def call(self, observationSequence):
         # input: an instance of observationSequence is not used here.
         
-        _pLever = tf.math.softmax(self._q, axis=-1) # (1, nLevers,)
+        assert isinstance(observationSequence, ObservationSequence)
+        obserbation = observationSequence.get(-1) # the latest observation
+        y = obserbation.getValue() # (*, nPv)
         
-        return ConcAction(_pLever)
+        _u = self.gainP(y) # (*, nMv)
+        
+        return ConcAction(_u)
     
     def createMemento(self):
         if not os.path.exists(ConcAgent.checkpointFolderPath):
