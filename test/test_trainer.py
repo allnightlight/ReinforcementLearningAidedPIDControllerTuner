@@ -26,7 +26,11 @@ class Test(unittest.TestCase):
                                     , nBatchPolicyOptimization=2**5
                                     , nSaveInterval=2**5
                                     , description="test"
-                                    , nLevers=3)
+                                    , tConstant = 10
+                                    , nHiddenValueApproximator = 2**5
+                                    , sdPolicy = 0.1
+                                    , nActionsSampledFromPolicy = 2**5                        
+                                    )
         
         agent = ConcAgentFactory().create(buildOrder)
         environment = ConcEnvironmentFactory().create(buildOrder)
@@ -45,7 +49,7 @@ class Test(unittest.TestCase):
         
         trainer = self.trainer
         assert isinstance(trainer, Trainer)
-        
+
     def test002(self):
         
         trainer = self.trainer
@@ -58,7 +62,7 @@ class Test(unittest.TestCase):
         assert len(trainer.historyActions) == 0
         assert len(trainer.historyObservationSequences) == 1
         assert len(trainer.historyRewards) == 0
-        
+    
     def test003(self):
         
         trainer = self.trainer
@@ -90,7 +94,7 @@ class Test(unittest.TestCase):
         trainer = self.trainer
         
         trainer.init()
-        trainer.train(2**10)
+        trainer.train(2**5)
         
         
 
