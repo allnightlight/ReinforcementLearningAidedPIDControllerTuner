@@ -12,17 +12,17 @@ class ConcBuildOrder(BuildOrder):
     '''
 
 
-    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, nLevers):
+    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, tConstant):
         '''
         Constructor
         '''
         
         super(ConcBuildOrder, self).__init__(nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description)
         
-        self.nLevers = nLevers
+        self.tConstant = tConstant
         
-    def getnLevers(self): 
-        return self.nLevers
+    def tConstant(self): 
+        return self.tConstant
         
     def toDict(self):
         
@@ -34,5 +34,5 @@ class ConcBuildOrder(BuildOrder):
             nBatchPolicyOptimization=self.nBatchPolicyOptimization,
             nSaveInterval=self.nSaveInterval,
             description=self.description,
-            nLevers=self.nLevers,
+            tConstant=self.tConstant,
             )

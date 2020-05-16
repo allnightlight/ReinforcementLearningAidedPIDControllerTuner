@@ -12,36 +12,33 @@ class ConcEnvironment(Environment):
     classdocs
     '''
 
+    nPv = 1
+    nMv = 1
 
-    def __init__(self, nLevers):
+    def __init__(self, tConstant):
         '''
         Constructor
         '''
         
-        x = None
-        p = np.zeros((nLevers,)) # (nLevers,)
-        
-        for k1 in range(nLevers):
-            if k1 < nLevers - 1:
-                p[k1] = 1/2**(k1+1)
-            else:
-                p[-1] = 1 - np.sum(p[:-1])
-                
-        self.p = p # (nLevers, )
-        self.x = x # in {0, 1}
+        self.x = None
+        self.alpha = 1 - 1/tConstant # e.g. 0.99 = 1 - 1/100 with tConstant = 100
+        self.beta = 1/np.sqrt(1 - self.alpha**2)
+        # to normalize the amplitude of disturbance 
+        # so that the influence on x equal to 1.
+        self.gamma = 0.1
+        # the influence of disturbance on x is controlled by gamma
         
     def init(self):
-        self.x = 0. # {0,1}
+        self.x = np.zeros((1,1)) # (1, nState = 1)
         
     def observe(self):
-        y = self.x # {0, 1}        
-        y_numpy = np.array(y, dtype=np.float32).reshape(1,-1)
-        return ConcObservation(y_numpy)
+        y = self.x # (1, nState = nPv = 1)
+        return ConcObservation(y.astype(np.float32))
     
     def update(self, action):
         # action as ConcAction
         
-        selectedAction = action.getSelectedAction() # (nLevers,)
-        pSelectedLever = np.sum(self.p * selectedAction) # (,)
-        self.x = float(np.random.rand() < pSelectedLever) # (,)
+        u = action.getActionOnEnvironment() # (1, nMv = 1)
+        w = np.random.randn(1, 1) # (1, nDv = 1)
+        self.x = self.alpha * self.x + (1-self.alpha) * u + self.gamma * self.beta * w # (1, nState = 1)
         
