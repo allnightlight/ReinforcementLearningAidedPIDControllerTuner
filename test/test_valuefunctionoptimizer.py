@@ -15,6 +15,7 @@ from MyArray import MyArray
 from framework import ObservationSequence
 import numpy as np
 import tensorflow as tf
+from ConcEnvironment import ConcEnvironment
 
 
 class Test(unittest.TestCase):
@@ -22,11 +23,11 @@ class Test(unittest.TestCase):
 
     def test001(self):
         
-        nLevers = 10
+        nHiddenValueApproximator = 2**3
         nHorizonValueOptimization = 3
         
-        valueFunctionApproximator = ConcValueFunctionApproximator(nLevers)
-        agent = ConcAgent(nLevers)
+        valueFunctionApproximator = ConcValueFunctionApproximator(nHiddenValueApproximator)
+        agent = ConcAgent(ConcEnvironment.nMv)
         
         valueFunctionOptimizer = ConcValueFunctionOptimizer(valueFunctionApproximator, agent, nHorizonValueOptimization)
         
@@ -36,16 +37,17 @@ class Test(unittest.TestCase):
         actions = MyArray()
         rewards = MyArray()
         
-        Nstep = 10
-        Ny = 1
+        nStep= 10
+        nBatch = 2**5
+        
         observationSequence = ObservationSequence()
-        for _ in range(Nstep + 1):
-            y = np.random.randn(1, Ny).astype(np.float32)
+        for _ in range(nStep + 1):
+            y = np.random.randn(nBatch, ConcEnvironment.nPv).astype(np.float32) # (*, nPv)
             observationSequence.add(ConcObservation(y))
             observationSequences.add(observationSequence)
             
-        for _ in range(Nstep):
-            action = ConcAction(tf.random.uniform(shape = (1, nLevers)))
+        for _ in range(nStep):
+            action = ConcAction(tf.random.normal(shape = (nBatch, ConcEnvironment.nMv)))
             actions.add(action)
         
         for observationSequence, action in zip(observationSequences, actions):

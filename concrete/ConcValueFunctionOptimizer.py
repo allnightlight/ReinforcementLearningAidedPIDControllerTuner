@@ -6,7 +6,7 @@ Created on 2020/05/03
 
 import numpy as np
 import tensorflow as tf
-from framework import ValueFunctionOptimizer
+from framework import ValueFunctionOptimizer, ObservationSequence
 from ConcAction import ConcAction
 
 class ConcValueFunctionOptimizer(ValueFunctionOptimizer):
@@ -35,16 +35,17 @@ class ConcValueFunctionOptimizer(ValueFunctionOptimizer):
         action0 = actions[0]
         assert isinstance(action0, ConcAction)
         
-        A0 = action0.getSelectedAction() # (*, nLevers)
-        
+        observationSequence0 = observationSequences[0]
+        assert isinstance(observationSequence0, ObservationSequence)
+            
         rewardMean = np.mean([reward.getValue() for reward in rewards ], axis=0) # (*,)
             
         with tf.GradientTape() as gtape:            
-            qValue0 = self.valueFunctionApproximator(observationSequences[0]) # (*, nLevers)
+            qValue0 = self.valueFunctionApproximator(observationSequence0, action0) # (*, 1)
             
-            _Q0 = qValue0.getValue() # (*, nLevers)
+            _q0 = qValue0.getValue() # (*, 1)
         
-            _ErrorBellman = tf.reduce_sum(_Q0 * A0, axis=-1) - rewardMean # (*,)
+            _ErrorBellman = _q0 - rewardMean # (*,)
                     
             _Loss = tf.reduce_mean(_ErrorBellman**2) #(,)
         
