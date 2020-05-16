@@ -20,8 +20,9 @@ class Test(unittest.TestCase):
 
     def test001(self):
         
-        nLevers = 3
-        environment = ConcEnvironment(nLevers)
+        tConstant = 10
+        environment = ConcEnvironment(tConstant)
+        environment.gamma = 0.0
         
         assert isinstance(environment, ConcEnvironment)
         
@@ -29,20 +30,17 @@ class Test(unittest.TestCase):
         observation = environment.observe()
         assert isinstance(observation, ConcObservation)
         
-        _pLever = tf.random.uniform(shape=(1, nLevers,)) # (nLevers,)
-        action = ConcAction(_pLever)
-        action.selectedAction[:, 1:] = 0
-        action.selectedAction[:, 0] = 1
-        
         Y = []
-        for _ in range(2**10):    
+        for _ in range(2**10):
+            _u = tf.random.normal(shape = (1,1)) # (1, nMv = 1)
+            action = ConcAction(_u)
+    
             environment.update(action)        
             observation = environment.observe()
             Y.append(observation.getValue())
-        
-        yAvg = np.mean(Y)
-        # this assertion might be violated with a small probability.        
-        assert np.abs(yAvg - 0.5) < 0.1, "y(average) = %.2f" % yAvg
+
+        Ynumpy = np.concatenate(Y, axis=0) # (2**10, nPv = 1)
+        assert np.all((Ynumpy >= -1.) & (Ynumpy <= 1.)) 
         
     def test002(self):
         
