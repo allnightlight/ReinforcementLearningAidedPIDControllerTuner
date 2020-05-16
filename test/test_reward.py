@@ -11,7 +11,6 @@ from ConcReward import ConcReward
 from ConcRewardGiver import ConcRewardGiver
 from framework import ObservationSequence
 import numpy as np
-import tensorflow as tf
 from ConcRewardGiverFactory import ConcRewardGiverFactory
 from ConcBuildOrder import ConcBuildOrder
 
@@ -33,7 +32,7 @@ class Test(unittest.TestCase):
 
         nMv = 10
         nPv = 1        
-        action = ConcAction(tf.random.normal(shape = (1, nMv,)))
+        action = ConcAction(np.random.randn(1, nMv))
         observationSequence = ObservationSequence()
         
         y = np.random.randn(1, nPv).astype(np.float32)
@@ -52,7 +51,7 @@ class Test(unittest.TestCase):
         rewardGiverFactory = ConcRewardGiverFactory()
         assert isinstance(rewardGiverFactory, ConcRewardGiverFactory)
         
-        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 3)
+        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 3, 100, 0.01)
         
         rewardGiver = rewardGiverFactory.create(buildOrder)
         assert isinstance(rewardGiver, ConcRewardGiver)

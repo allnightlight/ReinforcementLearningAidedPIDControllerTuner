@@ -11,7 +11,7 @@ class ConcBuildOrder(BuildOrder):
     '''
 
 
-    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, tConstant, nHiddenValueApproximator):
+    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, tConstant, nHiddenValueApproximator, sdPolicy):
         '''
         Constructor
         '''
@@ -20,6 +20,7 @@ class ConcBuildOrder(BuildOrder):
         
         self.tConstant = tConstant
         self.nHiddenValueApproximator = nHiddenValueApproximator
+        self.sdPolicy = sdPolicy
                 
     def toDict(self):
         
@@ -33,4 +34,5 @@ class ConcBuildOrder(BuildOrder):
             description=self.description,
             tConstant=self.tConstant,
             nHiddenValueApproximator = self.nHiddenValueApproximator,
+            sdPolicy = self.sdPolicy,
             )

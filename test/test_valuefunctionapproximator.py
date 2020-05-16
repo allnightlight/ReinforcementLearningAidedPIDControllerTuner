@@ -9,7 +9,6 @@ import unittest
 from ConcObservation import ConcObservation
 from ConcValueFunctionApproximator import ConcValueFunctionApproximator
 import numpy as np
-import tensorflow as tf
 from framework import ObservationSequence
 from ConcValue import ConcValue
 from ConcValueFunctionApproximatorFactory import ConcValueFunctionApproximatorFactory
@@ -35,8 +34,9 @@ class Test(unittest.TestCase):
         y = np.random.randn(nBatch, ConcEnvironment.nPv).astype(np.float32) # (*, nPv)
         observation = ConcObservation(y)
         observationSequence.add(observation)
-        
-        action = ConcAction(tf.random.normal(shape=(nBatch, ConcEnvironment.nMv)))
+
+        u = np.random.randn(nBatch, ConcEnvironment.nMv) # (*, nMv)        
+        action = ConcAction(u)
 
         value = valueFunctionApproximator(observationSequence, action)
         
@@ -50,7 +50,7 @@ class Test(unittest.TestCase):
         valueFunctionApproximatorFactory = ConcValueFunctionApproximatorFactory()
         assert isinstance(valueFunctionApproximatorFactory, ConcValueFunctionApproximatorFactory)
         
-        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 100, 2**3)
+        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 100, 2**3, 0.01)
         
         valueFunctionApproximator = valueFunctionApproximatorFactory.create(buildOrder)
         assert isinstance(valueFunctionApproximator, ConcValueFunctionApproximator)

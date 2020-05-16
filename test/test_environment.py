@@ -10,7 +10,6 @@ from ConcEnvironment import ConcEnvironment
 from ConcObservation import ConcObservation
 from framework import EnvironmentFactory
 import numpy as np
-import tensorflow as tf
 from ConcEnvrionmentFactory import ConcEnvironmentFactory
 from ConcBuildOrder import ConcBuildOrder
 
@@ -32,8 +31,8 @@ class Test(unittest.TestCase):
         
         Y = []
         for _ in range(2**10):
-            _u = tf.random.normal(shape = (1,1)) # (1, nMv = 1)
-            action = ConcAction(_u)
+            u = np.random.randn(1, ConcEnvironment.nMv) # (1, nMv = 1)
+            action = ConcAction(u)
     
             environment.update(action)        
             observation = environment.observe()
@@ -47,7 +46,7 @@ class Test(unittest.TestCase):
         environmentFactory = ConcEnvironmentFactory()
         assert isinstance(environmentFactory, ConcEnvironmentFactory)
         
-        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 3)
+        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 3, 100, 0.01)
         
         environment = environmentFactory.create(buildOrder)
         assert isinstance(environment, ConcEnvironment)
