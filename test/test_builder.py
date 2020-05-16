@@ -62,7 +62,11 @@ class Test(unittest.TestCase):
                         , nBatchPolicyOptimization=2**5
                         , nSaveInterval=2**5
                         , description="test %d/3" % (k1+1)
-                        , nLevers=3)
+                        , tConstant = 10
+                        , nHiddenValueApproximator = 2**5
+                        , sdPolicy = 0.1
+                        , nActionsSampledFromPolicy = 2**1
+                        )
             
             buildOrders.add(buildOrder)
             
