@@ -6,6 +6,7 @@ Created on 2020/05/05
 from ConcAgent import ConcAgent
 from ConcBuildOrder import ConcBuildOrder
 from framework import AgentFactory
+from ConcEnvironment import ConcEnvironment
 
 
 class ConcAgentFactory(AgentFactory):
@@ -20,4 +21,4 @@ class ConcAgentFactory(AgentFactory):
     def create(self, buildOrder):
         assert isinstance(buildOrder, ConcBuildOrder)
         
-        return ConcAgent(buildOrder.getnLevers())
+        return ConcAgent(ConcEnvironment.nMv)
