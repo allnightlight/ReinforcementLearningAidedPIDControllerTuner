@@ -15,9 +15,11 @@ class Test(unittest.TestCase):
 
     def test001(self):
         
-        nLevers = 5
-        environment = ConcEnvironment(nLevers)
-        agent = ConcAgent(nLevers)
+        tConstant = 10
+        sdPolicy = 0.1
+        
+        environment = ConcEnvironment(tConstant)
+        agent = ConcAgent(ConcEnvironment.nMv, sdPolicy)
         
         nSeq = 3
         
