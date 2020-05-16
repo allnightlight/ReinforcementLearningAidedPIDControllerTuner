@@ -31,7 +31,7 @@ class Test(unittest.TestCase):
         nMv = 10
         nPv = 3
         nBatch = 2**5
-        agent = ConcAgent(nMv)
+        agent = ConcAgent(nMv, sd = 0.0)
         
         assert isinstance(agent, ConcAgent)
         
@@ -59,7 +59,7 @@ class Test(unittest.TestCase):
         ConcAgent.checkpointFolderPath = "./test_checkpoints"
         
         nMv = 10
-        agent = ConcAgent(nMv)
+        agent = ConcAgent(nMv, sd = 0.0)
         
         assert isinstance(agent, ConcAgent)
 
@@ -73,7 +73,7 @@ class Test(unittest.TestCase):
         agentMemento = agent.createMemento()
         assert isinstance(agentMemento, AgentMemento)
         
-        agent2 = ConcAgent(nMv)
+        agent2 = ConcAgent(nMv, 0.0)
         
         agent2.loadFromMemento(agentMemento)
                 
@@ -87,7 +87,7 @@ class Test(unittest.TestCase):
         agentFactory = ConcAgentFactory()
         assert isinstance(agentFactory, ConcAgentFactory)
         
-        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 3)
+        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 100, 3, 0.0)
         
         agent = agentFactory.create(buildOrder)
         assert isinstance(agent, ConcAgent)
