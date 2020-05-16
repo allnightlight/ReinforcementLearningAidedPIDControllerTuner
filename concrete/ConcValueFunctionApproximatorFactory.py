@@ -24,5 +24,5 @@ class ConcValueFunctionApproximatorFactory(ValueFunctionApproximatorFactory):
     def create(self, buildOrder):
         assert isinstance(buildOrder, ConcBuildOrder)
         
-        return ConcValueFunctionApproximator(buildOrder.getnLevers())
+        return ConcValueFunctionApproximator(buildOrder.nHiddenValueApproximator)
         

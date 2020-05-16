@@ -4,7 +4,6 @@ Created on 2020/05/05
 @author: ukai
 '''
 from framework import BuildOrder
-import json
 
 class ConcBuildOrder(BuildOrder):
     '''
@@ -12,7 +11,7 @@ class ConcBuildOrder(BuildOrder):
     '''
 
 
-    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, tConstant):
+    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, tConstant, nHiddenValueApproximator):
         '''
         Constructor
         '''
@@ -20,10 +19,8 @@ class ConcBuildOrder(BuildOrder):
         super(ConcBuildOrder, self).__init__(nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description)
         
         self.tConstant = tConstant
-        
-    def tConstant(self): 
-        return self.tConstant
-        
+        self.nHiddenValueApproximator = nHiddenValueApproximator
+                
     def toDict(self):
         
         return dict(
@@ -35,4 +32,5 @@ class ConcBuildOrder(BuildOrder):
             nSaveInterval=self.nSaveInterval,
             description=self.description,
             tConstant=self.tConstant,
+            nHiddenValueApproximator = self.nHiddenValueApproximator,
             )

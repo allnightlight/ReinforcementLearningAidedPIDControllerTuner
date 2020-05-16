@@ -15,7 +15,7 @@ class ConcValue(Value):
         '''
         Constructor
         '''
-        self._qValue = _qValue # (*, nLevers)
+        self._qValue = _qValue # (*, 1), = q(state, action)
         
     def getValue(self):
         return self._qValue
