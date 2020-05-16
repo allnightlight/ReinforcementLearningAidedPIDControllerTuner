@@ -21,7 +21,9 @@ class Test(unittest.TestCase):
             nBatchPolicyOptimization=5,
             nSaveInterval=6,
             description="test message 20201634",
-            nLevers=7,
+            tConstant = 10,  
+            nHiddenValueApproximator = 2**3, 
+            sdPolicy = 0.1,            
             )
         
         buildOrder = ConcBuildOrder(**arg)
