@@ -31,11 +31,12 @@ class Test(unittest.TestCase):
         rewardGiver = ConcRewardGiver()
         assert isinstance(rewardGiver, ConcRewardGiver)
 
-        nLevers = 10        
-        action = ConcAction(tf.random.uniform(shape = (1, nLevers,)))
+        nMv = 10
+        nPv = 1        
+        action = ConcAction(tf.random.normal(shape = (1, nMv,)))
         observationSequence = ObservationSequence()
         
-        y = np.array(1.0, np.float32).reshape(1,1)
+        y = np.random.randn(1, nPv).astype(np.float32)
         observation = ConcObservation(y)
         observationSequence.add(observation)
         
@@ -44,7 +45,7 @@ class Test(unittest.TestCase):
         assert isinstance(reward, ConcReward)
         
         # in this case, reward equals with y.
-        assert reward.getValue() == y
+        assert reward.getValue() == -1.0 * np.max(np.abs(y), axis=-1) # (*,)
 
     def test003(self):
         
