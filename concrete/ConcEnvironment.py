@@ -13,7 +13,7 @@ class ConcEnvironment(Environment):
     '''
 
     nPv = 1
-    nMv = 1
+    nMv = 2
 
     def __init__(self, tConstant):
         '''
@@ -38,7 +38,7 @@ class ConcEnvironment(Environment):
     def update(self, action):
         # action as ConcAction
         
-        u = action.getActionOnEnvironment() # (1, nMv = 1)
+        u = action.getActionOnEnvironment() # (1, nMv)
         w = np.random.randn(1, 1) # (1, nDv = 1)
-        self.x = self.alpha * self.x + (1-self.alpha) * u + self.gamma * self.beta * w # (1, nState = 1)
+        self.x = self.alpha * self.x + (1-self.alpha) * u[:,0,None] + self.gamma * self.beta * w # (1, nState = 1)
         
