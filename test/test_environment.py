@@ -46,7 +46,7 @@ class Test(unittest.TestCase):
         environmentFactory = ConcEnvironmentFactory()
         assert isinstance(environmentFactory, ConcEnvironmentFactory)
         
-        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 3, 100, 0.01)
+        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 3, 100, 0.01, 2**3)
         
         environment = environmentFactory.create(buildOrder)
         assert isinstance(environment, ConcEnvironment)
