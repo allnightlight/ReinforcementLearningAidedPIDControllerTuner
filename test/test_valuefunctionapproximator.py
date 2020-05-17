@@ -50,7 +50,7 @@ class Test(unittest.TestCase):
         valueFunctionApproximatorFactory = ConcValueFunctionApproximatorFactory()
         assert isinstance(valueFunctionApproximatorFactory, ConcValueFunctionApproximatorFactory)
         
-        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 100, 2**3, 0.01)
+        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 100, 2**3, 0.01, 2**3)
         
         valueFunctionApproximator = valueFunctionApproximatorFactory.create(buildOrder)
         assert isinstance(valueFunctionApproximator, ConcValueFunctionApproximator)

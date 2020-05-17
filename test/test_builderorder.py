@@ -23,7 +23,8 @@ class Test(unittest.TestCase):
             description="test message 20201634",
             tConstant = 10,  
             nHiddenValueApproximator = 2**3, 
-            sdPolicy = 0.1,            
+            sdPolicy = 0.1,
+            nActionsSampledFromPolicy = 2**3,
             )
         
         buildOrder = ConcBuildOrder(**arg)
