@@ -13,9 +13,9 @@ class ConcEnvironment(Environment):
     '''
 
     nPv = 1
-    nMv = 2
+    nMv = 1
 
-    def __init__(self, tConstant):
+    def __init__(self, tConstant, amplitudeDv = 0.1):
         '''
         Constructor
         '''
@@ -25,7 +25,7 @@ class ConcEnvironment(Environment):
         self.beta = 1/np.sqrt(1 - self.alpha**2)
         # to normalize the amplitude of disturbance 
         # so that the influence on x equal to 1.
-        self.gamma = 0.1
+        self.gamma = amplitudeDv
         # the influence of disturbance on x is controlled by gamma
         
     def init(self):
