@@ -51,7 +51,7 @@ class Test(unittest.TestCase):
         rewardGiverFactory = ConcRewardGiverFactory()
         assert isinstance(rewardGiverFactory, ConcRewardGiverFactory)
         
-        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 3, 100, 0.01)
+        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 3, 100, 0.01, 2**3)
         
         rewardGiver = rewardGiverFactory.create(buildOrder)
         assert isinstance(rewardGiver, ConcRewardGiver)

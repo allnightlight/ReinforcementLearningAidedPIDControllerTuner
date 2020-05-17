@@ -39,7 +39,7 @@ class Test(unittest.TestCase):
             
         timeSimulation  = 123
         agentMemento = ConcAgentMemento(saveFilePath = "saveFilePathTEST")        
-        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 2)
+        buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 10, 2, 0.01, 2**3)
         timeStamp = "2020-05-05 16:23:59"
         
         storeField = StoreField(timeSimulation, agentMemento, buildOrder, timeStamp);
@@ -69,7 +69,7 @@ class Test(unittest.TestCase):
         for _ in range(N):
                 
             trainId = TrainId.generateTrainId()
-            buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 2)
+            buildOrder = ConcBuildOrder(100, 1, 2, 10, 32, 128, "test", 10, 2, 0.01, 2**3)
             
             agent = agentFactory.create(buildOrder)
                 
