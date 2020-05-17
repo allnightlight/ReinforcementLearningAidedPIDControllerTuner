@@ -43,8 +43,7 @@ class Test(unittest.TestCase):
         
         assert isinstance(reward, ConcReward)
         
-        # in this case, reward equals with y.
-        assert reward.getValue() == -1.0 * np.max(np.abs(y), axis=-1) # (*,)
+        assert np.all(reward.getValue() <= 0.0) # (*,)
 
     def test003(self):
         
