@@ -46,7 +46,3 @@ def loadTrainLog(trainLogFolderPath):
 
     return cur
 
-
-trainLogFolderPath = "./trainLog"
-cur = loadTrainLog(trainLogFolderPath)
-
