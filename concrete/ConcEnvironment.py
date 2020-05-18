@@ -52,7 +52,7 @@ class ConcEnvironment(Environment):
             + (1-self.alpha) * (u[:,0,None] + self.amplitudePeriodicDv * self.dvPeriodic) \
             + self.gamma * self.beta * w # (1, nState = 1)
             
-        if self.cyclePeriodicDv == self.cyclePeriodicDv - 1:
+        if self.t == self.cyclePeriodicDv - 1:
             self.dvPeriodic = -1.0 * self.dvPeriodic
         self.t = (self.t + 1) % self.cyclePeriodicDv
         
