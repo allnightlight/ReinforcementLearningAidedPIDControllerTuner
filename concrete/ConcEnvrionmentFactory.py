@@ -23,4 +23,4 @@ class ConcEnvironmentFactory(EnvironmentFactory):
     def create(self, buildOrder):
         assert isinstance(buildOrder, ConcBuildOrder)
         
-        return ConcEnvironment(buildOrder.tConstant)
+        return ConcEnvironment(buildOrder.tConstant, buildOrder.amplitudeDv, buildOrder.amplitudePeriodicDv, buildOrder.cyclePeriodicDv)
