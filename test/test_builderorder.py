@@ -31,7 +31,8 @@ class Test(unittest.TestCase):
         
         arg2 = buildOrder.toDict()
         
-        assert arg == arg2
+        for key in arg:
+            assert arg[key] == arg2[key]
         
         
         pass
