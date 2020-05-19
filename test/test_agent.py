@@ -101,6 +101,21 @@ class Test(unittest.TestCase):
         
         assert arg1 == arg2
         
+    def test007(self):
+        
+        agent0 = ConcAgent(2, 0.0, False)
+        agent1 = ConcAgent(2, 0.0, True)
+
+        observationSequence = ObservationSequence()        
+        y = np.array(1., dtype=np.float32).reshape(1,1) # (*, Ny = 1)
+        observationSequence.add(ConcObservation(y))
+        agent0(observationSequence)
+        agent1(observationSequence)
+        
+        assert len(agent0.weights) == 1 # kernel only
+        assert len(agent1.weights) == 2 # kernel and bias
+        
+        
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.test001']
