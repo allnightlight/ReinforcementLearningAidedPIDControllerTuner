@@ -20,5 +20,5 @@ class ConcRewardGiverFactory(RewardGiverFactory):
     def create(self, buildOrder):
         assert isinstance(buildOrder, ConcBuildOrder)
         
-        return ConcRewardGiver()
+        return ConcRewardGiver(weight=buildOrder.weightOnError)
         
