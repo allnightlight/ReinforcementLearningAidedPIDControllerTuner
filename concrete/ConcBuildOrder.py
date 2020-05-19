@@ -11,7 +11,7 @@ class ConcBuildOrder(BuildOrder):
     '''
 
 
-    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, tConstant, nHiddenValueApproximator, sdPolicy, nActionsSampledFromPolicy):
+    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, tConstant, nHiddenValueApproximator, sdPolicy, nActionsSampledFromPolicy, amplitudeDv = 0.1, amplitudePeriodicDv = 1.0, cyclePeriodicDv = 30, agentUseBias = True):
         '''
         Constructor
         '''
@@ -22,6 +22,10 @@ class ConcBuildOrder(BuildOrder):
         self.nHiddenValueApproximator = nHiddenValueApproximator
         self.sdPolicy = sdPolicy
         self.nActionsSampledFromPolicy = nActionsSampledFromPolicy
+        self.amplitudeDv = amplitudeDv
+        self.amplitudePeriodicDv = amplitudePeriodicDv
+        self.cyclePeriodicDv = cyclePeriodicDv
+        self.agentUseBias = agentUseBias
                 
     def toDict(self):
         
@@ -37,4 +41,8 @@ class ConcBuildOrder(BuildOrder):
             nHiddenValueApproximator = self.nHiddenValueApproximator,
             sdPolicy = self.sdPolicy,
             nActionsSampledFromPolicy = self.nActionsSampledFromPolicy,
+            amplitudeDv = self.amplitudeDv,
+            amplitudePeriodicDv = self.amplitudePeriodicDv,
+            cyclePeriodicDv = self.cyclePeriodicDv,
+            agentUseBias = self.agentUseBias, 
             )

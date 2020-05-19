@@ -66,6 +66,7 @@ class Test(unittest.TestCase):
                         , nHiddenValueApproximator = 2**5
                         , sdPolicy = 0.1
                         , nActionsSampledFromPolicy = 2**1
+                        , amplitudeDv = 0.0
                         )
             
             buildOrders.add(buildOrder)
