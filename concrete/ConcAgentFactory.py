@@ -21,4 +21,4 @@ class ConcAgentFactory(AgentFactory):
     def create(self, buildOrder):
         assert isinstance(buildOrder, ConcBuildOrder)
         
-        return ConcAgent(ConcEnvironment.nMv, buildOrder.sdPolicy)
+        return ConcAgent(ConcEnvironment.nMv, buildOrder.sdPolicy, use_bias = buildOrder.agentUseBias)

@@ -21,13 +21,13 @@ class ConcAgent(Agent, tf.keras.Model):
     checkpointFolderPath = "./checkpoint"
 
 
-    def __init__(self, nMv, sd):
+    def __init__(self, nMv, sd, use_bias = True):
         '''
         Constructor
         '''
         super(ConcAgent, self).__init__()
         
-        self.gainP = tf.keras.layers.Dense(nMv) # (*, nPv) -> (*, nMv)
+        self.gainP = tf.keras.layers.Dense(nMv, use_bias = use_bias) # (*, nPv) -> (*, nMv)
         
 # This agent has the fixed standard deviation, sd, of the normal density function which represents the policy.
 # It means that the policy is represented as like this:
