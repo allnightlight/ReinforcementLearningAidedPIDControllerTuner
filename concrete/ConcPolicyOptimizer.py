@@ -14,13 +14,13 @@ class ConcPolicyOptimizer(PolicyOptimizer):
     '''
 
 
-    def __init__(self, agent, valueFunctionApproximator, nIntervalPolicyOptimization, nBatchPolicyOptimization, nActionsSampledFromPolicy):
+    def __init__(self, agent, valueFunctionApproximator, nIntervalPolicyOptimization, nBatchPolicyOptimization, nActionsSampledFromPolicy, learningRate = 1e-3):
         '''
         Constructor
         '''
         super(ConcPolicyOptimizer, self).__init__(agent, valueFunctionApproximator, nIntervalPolicyOptimization, nBatchPolicyOptimization)
 
-        self.optimizer = tf.keras.optimizers.Adam()
+        self.optimizer = tf.keras.optimizers.Adam(learning_rate = learningRate)
         self.countUpdate = 0
         self.nActionsSampledFromPolicy = nActionsSampledFromPolicy
 
