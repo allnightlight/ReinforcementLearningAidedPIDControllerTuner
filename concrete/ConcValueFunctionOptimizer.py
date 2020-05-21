@@ -43,11 +43,12 @@ class ConcValueFunctionOptimizer(ValueFunctionOptimizer):
         with tf.GradientTape() as gtape:            
             qValue0 = self.valueFunctionApproximator(observationSequence0, action0) # (*, 1)
             
-            _q0 = qValue0.getValue() # (*, 1)
+            _q0, _sValue0 = qValue0.getValue() # _q0 = (*, 1), _sValue0 = (*,1)
         
             _ErrorBellman = _q0 - rewardMean # (*,)
+            _ErrorBellmanForStateValueFunction = _sValue0 - rewardMean # (*,)
                     
-            _Loss = tf.reduce_mean(_ErrorBellman**2) #(,)
+            _Loss = tf.reduce_mean(_ErrorBellman**2) + tf.reduce_mean(_ErrorBellmanForStateValueFunction**2) #(,)
         
         _Grad = gtape.gradient(_Loss, self.valueFunctionApproximator.trainable_variables)
         

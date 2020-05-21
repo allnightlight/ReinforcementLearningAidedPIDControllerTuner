@@ -37,17 +37,19 @@ class ConcPolicyOptimizer(PolicyOptimizer):
             values = []            
             for observationSequence in observationSequences:
                 Qsampled = []
+                V = None
                 LLsampled = []
-                for _ in range(self.nActionsSampledFromPolicy):
+                for k1 in range(self.nActionsSampledFromPolicy):
                     action = self.agent(observationSequence)
                     qValue = self.valueFunctionApproximator(observationSequence, action)
-                    _q = qValue.getValue() # (*, 1)
+                    _q, _sValue = qValue.getValue() # _q = (*, 1), _sValue = (*,1)
                     Qsampled.append(_q.numpy())
+                    if k1 == 0:
+                        V = _sValue.numpy() # (*,1)
                     _ll = self.agent.loglikelihood(observationSequence, action) # (*, 1)
                     LLsampled.append(_ll)
                 Qsampled = np.stack(Qsampled, axis=0) # (nActionsSampledFromPolicy, *, 1)
                 _LLsampled = tf.stack(LLsampled, axis=0) # (nActionsSampledFromPolicy, *, 1)
-                V = np.mean(Qsampled, axis=0, keepdims=True) # (*, 1), V(s) = EXP(Q(s,a), over a ~ pi(.|s), say, the policy of the given agent)
                 
                 values.append(tf.reduce_mean(_LLsampled * (Qsampled - V))) # (,)
                 

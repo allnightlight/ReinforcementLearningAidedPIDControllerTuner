@@ -42,8 +42,9 @@ class Test(unittest.TestCase):
         
         assert isinstance(value, ConcValue)
         
-        _qValue = value.getValue()
-        assert _qValue.shape == (nBatch, 1)
+        _aValue, _sValue = value.getValue()
+        assert _aValue.shape == (nBatch, 1)
+        assert _sValue.shape == (nBatch, 1)
         
     def test002(self):
         

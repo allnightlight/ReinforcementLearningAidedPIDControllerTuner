@@ -32,10 +32,13 @@ class ConcValueFunctionApproximator(ValueFunctionApproximator, tf.keras.Model):
         
         y = observation.getValue() # (*, nPv)
         u = action.getValue() # (*, nMv)
+        uNull = tf.zeros(shape=u.shape) # (*, nMv)
         
         yu = np.concatenate((y,u), axis=-1) # (*, nPv + nMv)
+        yuNull = np.concatenate((y,uNull), axis=-1) # (*, nPv + nMv)
         
-        _qValue = self.fnn(yu) # (*, 1)
+        _aValue = self.fnn(yu) # (*, 1)
+        _sValue = self.fnn(yuNull) # (*, 1)
         
-        return ConcValue(_qValue)
+        return ConcValue(_aValue, _sValue)
         
