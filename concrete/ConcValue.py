@@ -11,12 +11,13 @@ class ConcValue(Value):
     '''
 
 
-    def __init__(self, _qValue):
+    def __init__(self, _aValue, _sValue):
         '''
         Constructor
         '''
-        self._qValue = _qValue # (*, 1), = q(state, action)
+        self._aValue = _aValue # (*, 1), = q(state, action) action-value function
+        self._sValue = _sValue # (*, 1), = v(state), state-value function
         
     def getValue(self):
-        return self._qValue
+        return (self._aValue, self._sValue)
         
