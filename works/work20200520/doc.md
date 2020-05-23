@@ -15,10 +15,11 @@ This is a very basic study, though, it's possible to verify the validity of the 
 This study implemented the agent as the form of the P-controller, 
 which means that 
 - the agent output continuous actions,
-- actions are proportional to observations of the environment with the constant proportional rate, so-called gain.
+- actions are proportional to observations of the environment with the constant proportional rate, so-called proportional gain.
+
 Other than those features, 
-- the agent adds random values following the normal distribution with a fixed deviation on actions,
-- actions pass through the hyperbolic tan function before being imposed on the environment in order to make the tuning process stable.
+- the agent adds random values following the normal distribution with a fixed standard deviation = 0.1 on actions,
+- actions pass through the hyperbolic tan function before being acted on the environment in order to make the tuning process stable.
 
 ## Environment
 
@@ -37,22 +38,23 @@ Reward consists of the twofold parts:
 - the absolute value of the observation(namely the error),
 - the absolute value of actions.
 
-It's the weight parameter on the error agains the amplitude of the action, 
-called just the weight parameter by which the two components are added.
-For example, the value = 0.9 means prioritising the regulation rather than the cost of action,
+It's the weight parameter on the error against the action, 
+called just the weight parameter,
+by which the two components are added.
+For example, the value = 0.9 means prioritising the regulation of the error rather than the cost of action,
 while the value = 0.1 means reducing the cost of action at the expense of high error.
 
 ## Return
 
 Given the agent and the environment, Return is defined as the expected value of the average of rewards along with the fixed length horizon = 8.
 The Actor Critic methods minimize the value of the Return 
-so that the proportional parameter of the p-controller, gain, will be tuned according to the intention of the designer.
+so that the proportional parameter of the p-controller will be tuned according to the intention of the designer.
 
 # Section 3: Case studies
 
 It's supposed that the agents, namely P-controllers converges to the optimal one along with the training 
 and that the larger the weight parameter is, the greater the optimal proportional gain is.
-These are confirmed, here.
+Here, these arguments will be confirmed.
 
 ## Subsection 3.1: case study #1
 
@@ -68,7 +70,7 @@ Table 3.1.1 Training parameters
 
 The figure 3.1.1 shows the trace of gains along with the training for each value of the weight parameter, respectively.
 You can notice that
-- in all the case of the weight parameter, some of proportional gains converge, 
+- in all the case of the weight parameter, some of proportional gains are converging, 
 - in the others, the majority of which started from the positive gain, the gain increases rather than go below the zero-axis.
 
 <img src="./img/p_gain_training_process.png" width="480px">
