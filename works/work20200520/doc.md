@@ -69,11 +69,19 @@ Table 3.1.1 Training parameters
 The figure 3.1.1 shows the trace of gains along with the training for each value of the weight parameter, respectively.
 You can notice that
 - in all the case of the weight parameter, some of proportional gains converge, 
-- others, the majority of which started from the positive gain, increase rather than go below the zero-axis.
+- in the others, the majority of which started from the positive gain, the gain increases rather than go below the zero-axis.
+
+<img src="./img/p_gain_training_process.png" width="480px">
+
+Fig.3.1.1 The proportional gains over the training process
 
 The figure 3.1.2 shows the distributions of the proportional gains for each weight parameter at the training iterations.
 It shows that the median of the converged gains becomes less with the higher weight on the error in the reward.
 This means that the P-controller with the higher weight parameter responses against the stepwise disturbance more quickly.
+
+<img src="./img/p_gain_distribution.png" width="480px">
+
+Fig.3.1.2 The proportional gains over the training process
 
 # Summary:
 
