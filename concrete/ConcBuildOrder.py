@@ -11,7 +11,7 @@ class ConcBuildOrder(BuildOrder):
     '''
 
 
-    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, tConstant, nHiddenValueApproximator, sdPolicy, nActionsSampledFromPolicy, amplitudeDv = 0.1, amplitudePeriodicDv = 1.0, cyclePeriodicDv = 30, agentUseBias = True, learningRatePolicyOptimizer = 1e-3, learningRateValueFunctionOptimizer = 1e-3, weightOnError = 0.5):
+    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, tConstant, nHiddenValueApproximator, sdPolicy, nActionsSampledFromPolicy, amplitudeDv = 0.1, amplitudePeriodicDv = 1.0, cyclePeriodicDv = 30, agentUseBias = True, policyOptimizer = "Adam", valueFunctionOptimizer = "Adam", learningRatePolicyOptimizer = 1e-3, learningRateValueFunctionOptimizer = 1e-3, weightOnError = 0.5):
         '''
         Constructor
         '''
@@ -28,7 +28,9 @@ class ConcBuildOrder(BuildOrder):
         self.agentUseBias = agentUseBias
         self.learningRatePolicyOptimizer = learningRatePolicyOptimizer 
         self.learningRateValueFunctionOptimizer = learningRateValueFunctionOptimizer
-        self.weightOnError = weightOnError
+        self.weightOnError = weightOnError        
+        self.policyOptimizer = policyOptimizer
+        self.valueFunctionOptimizer = valueFunctionOptimizer
 
                 
     def toDict(self):
@@ -51,5 +53,7 @@ class ConcBuildOrder(BuildOrder):
             agentUseBias = self.agentUseBias, 
             learningRatePolicyOptimizer = self.learningRatePolicyOptimizer,  
             learningRateValueFunctionOptimizer = self.learningRateValueFunctionOptimizer,
-            weightOnError = self.weightOnError,
+            weightOnError = self.weightOnError,            
+            policyOptimizer = self.policyOptimizer,
+            valueFunctionOptimizer = self.valueFunctionOptimizer, 
             )
