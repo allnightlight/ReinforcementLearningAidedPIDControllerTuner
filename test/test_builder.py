@@ -54,7 +54,7 @@ class Test(unittest.TestCase):
         
         buildOrders = MyArray()
             
-        for k1 in range(3):
+        for k1 in range(1):
             buildOrder = ConcBuildOrder(nIteration=100
                         , nSeq=2
                         , nHorizonValueOptimization=1
@@ -67,6 +67,25 @@ class Test(unittest.TestCase):
                         , sdPolicy = 0.1
                         , nActionsSampledFromPolicy = 2**1
                         , amplitudeDv = 0.0
+                        )
+            
+            buildOrders.add(buildOrder)
+            
+        for k1 in range(1):
+            buildOrder = ConcBuildOrder(nIteration=100
+                        , nSeq=2
+                        , nHorizonValueOptimization=1
+                        , nIntervalPolicyOptimization=10
+                        , nBatchPolicyOptimization=2**5
+                        , nSaveInterval=2**5
+                        , description="test %d/3" % (k1+1)
+                        , tConstant = 10
+                        , nHiddenValueApproximator = 2**5
+                        , sdPolicy = 0.1
+                        , nActionsSampledFromPolicy = 2**1
+                        , amplitudeDv = 0.0
+                        , valueFunctionOptimizer = "RMSprop"
+                        , policyOptimizer = "RMSprop"
                         )
             
             buildOrders.add(buildOrder)
