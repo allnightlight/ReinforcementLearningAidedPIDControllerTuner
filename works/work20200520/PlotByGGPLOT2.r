@@ -22,5 +22,17 @@ p = p + geom_boxplot()
 p = p + facet_wrap(weightOnError ~ .)
 p = p + xlab('Training iteration')
 p = p + ylab('Gain')
-ggsave('./tmp/gain.png')
+ggsave('./tmp/p_gain_distribution.png')
+print(p)
+
+
+df = read.csv("./tmp/gain.csv")
+
+p = ggplot(df, aes(x = as.factor(epoch), y=value, group=buildOrderId))
+p = p + geom_line(size=1, color="gray")
+p = p + geom_point(size=1, color="black", shape = 16)
+p = p + facet_wrap(weightOnError ~ .)
+p = p + xlab('Training iteration')
+p = p + ylab('Gain')
+ggsave('./tmp/p_gain_training_process.png')
 print(p)
