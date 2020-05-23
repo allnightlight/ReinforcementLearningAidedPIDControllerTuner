@@ -15,12 +15,16 @@ class ConcValueFunctionOptimizer(ValueFunctionOptimizer):
     '''
 
 
-    def __init__(self, valueFunctionApproximator, agent, nHorizonValueOptimization, learningRate=1e-3):
+    def __init__(self, valueFunctionApproximator, agent, nHorizonValueOptimization, optimizer = "Adam", learningRate=1e-3):
         '''
         Constructor
         '''
         super(ConcValueFunctionOptimizer, self).__init__(valueFunctionApproximator, agent, nHorizonValueOptimization)
-        self.optimizer = tf.keras.optimizers.Adam(learning_rate = learningRate)
+        self.optimizer = None
+        if optimizer == "Adam":
+            self.optimizer = tf.keras.optimizers.Adam(learning_rate = learningRate)
+        if optimizer == "RMSprop":
+            self.optimizer = tf.keras.optimizers.RMSprop(learning_rate = learningRate)            
         self.countUpdate = 0
         
         
