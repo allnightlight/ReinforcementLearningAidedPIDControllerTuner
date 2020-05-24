@@ -90,6 +90,27 @@ class Test(unittest.TestCase):
             
             buildOrders.add(buildOrder)
             
+        buildOrder = ConcBuildOrder(nIteration=100
+                    , nSeq=2
+                    , nHorizonValueOptimization=1
+                    , nIntervalPolicyOptimization=10
+                    , nBatchPolicyOptimization=2**5
+                    , nSaveInterval=2**5
+                    , description="test 3"
+                    , tConstant = 10
+                    , nHiddenValueApproximator = 2**5
+                    , sdPolicy = 0.1
+                    , nActionsSampledFromPolicy = 2**1
+                    , amplitudeDv = 0.0
+                    , valueFunctionOptimizer = "RMSprop"
+                    , policyOptimizer = "RMSprop"
+                    , returnType = "SumOfInfiniteRewardSeries"
+                    , gamma = 0.9
+                    )
+        
+        buildOrders.add(buildOrder)
+
+            
         builder.build(buildOrders)
         
 
