@@ -112,6 +112,28 @@ Fig.3.2.1 The proportional gains over the training process
 
 Fig.3.2.2 The proportional gains over the training process
 
+## Subsection 3.3: case study #3
+
+now, editing
+
+Table 3.3.1 Training parameters
+| name|value|
+|:---:|:---:|
+|both the value and the policy optimizer|Adam|
+|learning rate for value optimization| 0.01 |
+|learning rate for policy optimization| 0.001 |
+|the interval of policy update| 2 |
+| finite or infinite reward series | infinite |
+| gamma | 0.9 |
+
+<img src="./img/p_gain_training_process_casestudy002.png" width="480px">
+
+Fig.3.3.1 The proportional gains over the training process
+
+<img src="./img/p_gain_distribution_casestudy002.png" width="480px">
+
+Fig.3.3.2 The proportional gains over the training process
+
 # Summary:
 
 - Case study #1 tells us that the PID parameter tuning algorithm powered by the RL is helpful, however, it remains the question in the convergence.
