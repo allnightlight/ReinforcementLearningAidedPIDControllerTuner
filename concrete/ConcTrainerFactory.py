@@ -22,6 +22,6 @@ class ConcTrainerFactory(TrainerFactory):
         
     def create(self, agent, environment, valueFunctionApproximator, rewardGiver, buildOrder):
         closedLoopSimulator = ClosedLoopSimulator(environment, agent, buildOrder.getnSeq())
-        valueFunctionOptimizer = ConcValueFunctionOptimizer(valueFunctionApproximator, agent, buildOrder.getnHorizonValueOptimization(), buildOrder.valueFunctionOptimizer, buildOrder.learningRateValueFunctionOptimizer)
+        valueFunctionOptimizer = ConcValueFunctionOptimizer(valueFunctionApproximator, agent, buildOrder.getnHorizonValueOptimization(), buildOrder.valueFunctionOptimizer, buildOrder.learningRateValueFunctionOptimizer, returnType = buildOrder.returnType, gamma = buildOrder.gamma)
         policyOptimizer = ConcPolicyOptimizer(agent, valueFunctionApproximator, buildOrder.getnIntervalPolicyOptimization(), buildOrder.getnBatchPolicyOptimization(), buildOrder.nActionsSampledFromPolicy, buildOrder.policyOptimizer, buildOrder.learningRatePolicyOptimizer)
         return Trainer(closedLoopSimulator, valueFunctionOptimizer, policyOptimizer, rewardGiver, buildOrder.getnIteration(), buildOrder.getnSaveInterval())
