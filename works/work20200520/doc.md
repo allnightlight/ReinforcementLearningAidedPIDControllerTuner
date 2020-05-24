@@ -89,7 +89,8 @@ Fig.3.1.2 The proportional gains over the training process
 
 This case study used the optimizer: RMSprop instead of the optimizer: Adam as the case study #1 used.
 As the former optimizer was applied to the reinforcement learning in some papers, 
-it's possible that the optimizer should have been effective for the convergence of the proportional gain.
+the optimizer might have been effective for the convergence of the proportional gain.
+That's why the difference of the optimizers was verified, here.
 More precisely, the training parameters were set as summarised in the table 3.2.1.
 
 The results of the trained gains are shown in the figure 3.2.1 and 3.2.2.
