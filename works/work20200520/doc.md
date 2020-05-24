@@ -85,6 +85,32 @@ This means that the P-controller with the higher weight parameter responses agai
 
 Fig.3.1.2 The proportional gains over the training process
 
+## Subsection 3.2: case study #2
+
+This case study used the optimizer: RMSprop instead of the optimizer: Adam as the case study #1 used.
+As the former optimizer was applied to the reinforcement learning in some papers, 
+it's possible that the optimizer should have been effective for the convergence of the proportional gain.
+More precisely, the training parameters were set as summarised in the table 3.2.1.
+
+The results of the trained gains are shown in the figure 3.2.1 and 3.2.2.
+They tell us that the optimizer: RMSporp cannot make sense for improving the convergence.
+
+Table 3.2.1 Training parameters
+| name|value|
+|:---:|:---:|
+|both the value and the policy optimizer|RMSprop|
+|learning rate for value optimization| 0.01 |
+|learning rate for policy optimization| 0.001 |
+|the interval of policy update| 16 |
+
+<img src="./img/p_gain_training_process_casestudy002.png" width="480px">
+
+Fig.3.2.1 The proportional gains over the training process
+
+<img src="./img/p_gain_distribution_casestudy002.png" width="480px">
+
+Fig.3.2.2 The proportional gains over the training process
+
 # Summary:
 
 - Case study #1 tells us that the PID parameter tuning algorithm powered by the RL is helpful, however, it remains the question in the convergence.
