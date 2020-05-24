@@ -126,11 +126,11 @@ Table 3.3.1 Training parameters
 | finite or infinite reward series | infinite |
 | gamma | 0.9 |
 
-<img src="./img/p_gain_training_process_casestudy002.png" width="480px">
+<img src="./img/p_gain_training_process_casestudy003.png" width="480px">
 
 Fig.3.3.1 The proportional gains over the training process
 
-<img src="./img/p_gain_distribution_casestudy002.png" width="480px">
+<img src="./img/p_gain_distribution_casestudy003.png" width="480px">
 
 Fig.3.3.2 The proportional gains over the training process
 
