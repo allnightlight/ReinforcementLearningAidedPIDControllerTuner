@@ -114,7 +114,19 @@ Fig.3.2.2 The proportional gains over the training process
 
 ## Subsection 3.3: case study #3
 
-now, editing
+In the contrast to the case studies #1 and #2,
+the return was given by the summation of the infinite reward series with the discounting factor: gamma = 0.9
+, which is equivalent to the moving average with the fixed window length = 10.
+The length of the reward horizon = 8 of both the case studies #1 and #2 is enough long to cover the effect of the actions
+and the result of the training does not differ from the case studies #1 and #2,
+though, it's beneficial to train agents since the interval of policy update can be shrunk from 16 to 2.
+
+The training parameters in the table 3.3.1 shown below were used.
+The figure 3.3.1 and the figure 3.3.2 are the traces of the trained proportional gains.
+Beyond the expectation, the summation of the infinite reward series with the discounting factor can lead to better convergence.
+Especially, in the case with the weigh parameter = 0.1, the gain has already converged
+and in the rest of the cases, it's possible to see that the gains are approaching to the converged one.
+I'm struggling with the reason.
 
 Table 3.3.1 Training parameters
 | name|value|
