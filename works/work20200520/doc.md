@@ -46,7 +46,8 @@ while the value = 0.1 means reducing the cost of action at the expense of high e
 
 ## Return
 
-Given the agent and the environment, Return is defined as the expected value of the average of rewards along with the fixed length horizon = 8.
+Given the agent and the environment, Return is defined as either the expected value of the average of rewards along with the fixed length horizon = 8
+or the expected one of the summation of the infinite reward series with the fixed discounting factor = 0.9.
 The Actor Critic methods minimize the value of the Return 
 so that the proportional parameter of the p-controller will be tuned according to the intention of the designer.
 
@@ -67,6 +68,8 @@ Table 3.1.1 Training parameters
 |learning rate for value optimization| 0.01 |
 |learning rate for policy optimization| 0.001 |
 |the interval of policy update| 16 |
+| finite or infinite reward series | finite |
+|reward horizon length | 8 |
 
 The figure 3.1.1 shows the trace of gains along with the training for each value of the weight parameter, respectively.
 You can notice that
@@ -103,6 +106,8 @@ Table 3.2.1 Training parameters
 |learning rate for value optimization| 0.01 |
 |learning rate for policy optimization| 0.001 |
 |the interval of policy update| 16 |
+| finite or infinite reward series | finite |
+|reward horizon length | 8 |
 
 <img src="./img/p_gain_training_process_casestudy002.png" width="480px">
 
