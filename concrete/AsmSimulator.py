@@ -9,6 +9,7 @@ from framework import Environment
 from google_auth_oauthlib import flow
 from ConcObservation import ConcObservation
 from AsmAction import AsmAction
+from AsmObservation import AsmObservation
 
 class AsmSimulator(Environment):
     '''
@@ -22,7 +23,7 @@ class AsmSimulator(Environment):
         "X_AUT, X_H, X_I, X_PAO, X_PHA, X_PP, X_S, X_TSS".replace(" ", \
         "").split(",")
 
-    def __init__(self, h = 15/60/24, volume = 12, flow = 24, rho = 1/24, pgain = 10000., amplitudePeriodicDv = 1.0):
+    def __init__(self, h = 15/60/24, volume = 12, flow = 24, rho = 1/24, pgain = 10000., amplitudePeriodicDv = 1.0, SvNh4 = 3.0):
         '''
         Constructor
         the unit of h is [day]
@@ -39,6 +40,7 @@ class AsmSimulator(Environment):
         self.amplitudePeriodicDv = amplitudePeriodicDv
         self.idxSO2 = AsmSimulator.asmVarNames.index("S_O2")
         self.idxNH4 = AsmSimulator.asmVarNames.index("S_NH4")
+        self.SvNh4 = SvNh4
 
         self.isSoluble = np.array([elm[0] == 'S' for elm in AsmSimulator.asmVarNames]) # (nS + nX,)
         self.nAsm = len(self.asmVarNames)
@@ -56,8 +58,11 @@ class AsmSimulator(Environment):
            2.61009185e+03])
             
     def observe(self):
-        y = self.x[self.idxNH4].reshape(1,1).astype(np.float32)
-        return ConcObservation(y)        
+        S_NH4 =self.x[self.idxNH4] # (,)
+        e = S_NH4 - self.SvNh4 # (,)
+        e = e.reshape(1,1).astype(np.float32) # (1,1)
+        
+        return AsmObservation(e, S_NH4, self.SvNh4)        
     
     def update(self, action):
         assert isinstance(action, AsmAction)
