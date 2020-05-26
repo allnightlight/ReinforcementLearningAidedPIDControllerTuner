@@ -8,6 +8,7 @@ import numpy as np
 from framework import Environment
 from google_auth_oauthlib import flow
 from ConcObservation import ConcObservation
+from AsmAction import AsmAction
 
 class AsmSimulator(Environment):
     '''
@@ -59,6 +60,7 @@ class AsmSimulator(Environment):
         return ConcObservation(y)        
     
     def update(self, action):
+        assert isinstance(action, AsmAction)
         
         Do = action.getActionOnEnvironment()
         Mv = Do
