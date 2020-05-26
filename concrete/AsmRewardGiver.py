@@ -6,6 +6,7 @@ Created on 2020/05/26
 import numpy as np
 from framework import RewardGiver
 from ConcReward import ConcReward
+from AsmAction import AsmAction
 
 class AsmRewardGiver(RewardGiver):
     '''
@@ -21,6 +22,8 @@ class AsmRewardGiver(RewardGiver):
         self.SvNh4 = SvNh4
         
     def evaluate(self, observationSequence, action):
+        assert isinstance(action, AsmAction)
+        
         observation = observationSequence[-1]
         S_NH4 = observation.getValue() # (*, nPv)
         
