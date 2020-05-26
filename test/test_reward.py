@@ -15,6 +15,7 @@ from ConcRewardGiverFactory import ConcRewardGiverFactory
 from ConcBuildOrder import ConcBuildOrder
 from AsmRewardGiver import AsmRewardGiver
 from AsmAction import AsmAction
+from AsmObservation import AsmObservation
 
 
 class Test(unittest.TestCase):
@@ -60,9 +61,7 @@ class Test(unittest.TestCase):
     def test004(self):
         # check AsmRewardGiver
         
-        SvNh4 = 3
-        
-        rewardGiver = AsmRewardGiver(SvNh4 = SvNh4)
+        rewardGiver = AsmRewardGiver()
         assert isinstance(rewardGiver, AsmRewardGiver)
 
         nMv = 1
@@ -73,7 +72,7 @@ class Test(unittest.TestCase):
             observationSequence = ObservationSequence()
             
             y = 10 * np.random.rand(1, nPv).astype(np.float32)
-            observation = ConcObservation(y)
+            observation = AsmObservation(y, 1.5, 3.0)
             observationSequence.add(observation)
             
             reward = rewardGiver.evaluate(observationSequence, action)
