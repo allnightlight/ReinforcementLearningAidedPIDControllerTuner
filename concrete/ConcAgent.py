@@ -47,16 +47,22 @@ class ConcAgent(Agent, tf.keras.Model):
         _mu = self.gainP(y) # (*, nMv)
         sd = self.sd # (1, nMv)
         return _mu, sd
-        
-    def call(self, observationSequence):
-        # input: an instance of observationSequence is not used here.
-        
+    
+    def sampleMvFromPi(self, observationSequence):
         _mu, sd = self.getProbabilisticFunctionParameter(observationSequence)
         # _mu: (*, nMv), sd: (*, nMv)
         mu = _mu.numpy() # (*, nMv)
 
-        u = mu + np.random.randn(mu.shape[0], 1) * sd # (*, nMv) 
+        u = mu + np.random.randn(mu.shape[0], 1) * sd # (*, nMv)
         
+        return u # (*, nMv)
+
+        
+    def call(self, observationSequence):
+        # input: an instance of observationSequence is not used here.
+        
+        u = self.sampleMvFromPi(observationSequence) # (*, nMv)
+                
         return ConcAction(u)
     
     def loglikelihood(self, observationSequence, action):
