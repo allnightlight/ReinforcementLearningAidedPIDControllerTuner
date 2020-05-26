@@ -6,6 +6,7 @@ Created on 2020/05/05
 from ConcBuildOrder import ConcBuildOrder
 from ConcEnvironment import ConcEnvironment
 from framework import EnvironmentFactory
+from AsmSimulator import AsmSimulator
 
 
 class ConcEnvironmentFactory(EnvironmentFactory):
@@ -23,4 +24,8 @@ class ConcEnvironmentFactory(EnvironmentFactory):
     def create(self, buildOrder):
         assert isinstance(buildOrder, ConcBuildOrder)
         
-        return ConcEnvironment(buildOrder.tConstant, buildOrder.amplitudeDv, buildOrder.amplitudePeriodicDv, buildOrder.cyclePeriodicDv)
+        if buildOrder.environmentName == "ConcEnvironment":
+            return ConcEnvironment(buildOrder.tConstant, buildOrder.amplitudeDv, buildOrder.amplitudePeriodicDv, buildOrder.cyclePeriodicDv)
+        
+        if buildOrder.environmentName == "AsmSimulator":        
+            return AsmSimulator()

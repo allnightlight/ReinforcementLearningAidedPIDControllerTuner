@@ -11,7 +11,7 @@ class ConcBuildOrder(BuildOrder):
     '''
 
 
-    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, tConstant, nHiddenValueApproximator, sdPolicy, nActionsSampledFromPolicy, amplitudeDv = 0.1, amplitudePeriodicDv = 1.0, cyclePeriodicDv = 30, agentUseBias = True, policyOptimizer = "Adam", valueFunctionOptimizer = "Adam", learningRatePolicyOptimizer = 1e-3, learningRateValueFunctionOptimizer = 1e-3, weightOnError = 0.5, returnType = "SumOfFiniteRewardSeries", gamma = None):
+    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, tConstant, nHiddenValueApproximator, sdPolicy, nActionsSampledFromPolicy, amplitudeDv = 0.1, amplitudePeriodicDv = 1.0, cyclePeriodicDv = 30, agentUseBias = True, policyOptimizer = "Adam", valueFunctionOptimizer = "Adam", learningRatePolicyOptimizer = 1e-3, learningRateValueFunctionOptimizer = 1e-3, weightOnError = 0.5, returnType = "SumOfFiniteRewardSeries", gamma = None, environmentName = "ConcEnvironment"):
         '''
         Constructor
         '''
@@ -33,6 +33,7 @@ class ConcBuildOrder(BuildOrder):
         self.valueFunctionOptimizer = valueFunctionOptimizer
         self.returnType = returnType
         self.gamma = gamma
+        self.environmentName = environmentName
 
                 
     def toDict(self):
@@ -59,5 +60,6 @@ class ConcBuildOrder(BuildOrder):
             policyOptimizer = self.policyOptimizer,
             valueFunctionOptimizer = self.valueFunctionOptimizer,
             returnType = self.returnType,
-            gamma = self.gamma, 
+            gamma = self.gamma,
+            environmentName = self.environmentName, 
             )

@@ -7,6 +7,8 @@ from ConcAgent import ConcAgent
 from ConcBuildOrder import ConcBuildOrder
 from framework import AgentFactory
 from ConcEnvironment import ConcEnvironment
+from AsmSimulator import AsmSimulator
+from AsmAgent import AsmAgent
 
 
 class ConcAgentFactory(AgentFactory):
@@ -21,4 +23,8 @@ class ConcAgentFactory(AgentFactory):
     def create(self, buildOrder):
         assert isinstance(buildOrder, ConcBuildOrder)
         
-        return ConcAgent(ConcEnvironment.nMv, buildOrder.sdPolicy, use_bias = buildOrder.agentUseBias)
+        if buildOrder.environmentName == "ConcEnvironment":
+            return ConcAgent(ConcEnvironment.nMv, buildOrder.sdPolicy, use_bias = buildOrder.agentUseBias)
+        
+        if buildOrder.environmentName == "AsmSimulator":
+            return AsmAgent(AsmSimulator.nMv, buildOrder.sdPolicy, use_bias = buildOrder.agentUseBias)

@@ -6,6 +6,7 @@ Created on 2020/05/05
 from ConcBuildOrder import ConcBuildOrder
 from ConcRewardGiver import ConcRewardGiver
 from framework import RewardGiverFactory
+from AsmRewardGiver import AsmRewardGiver
 
 
 class ConcRewardGiverFactory(RewardGiverFactory):
@@ -20,5 +21,8 @@ class ConcRewardGiverFactory(RewardGiverFactory):
     def create(self, buildOrder):
         assert isinstance(buildOrder, ConcBuildOrder)
         
-        return ConcRewardGiver(weight=buildOrder.weightOnError)
-        
+        if buildOrder.environmentName == "ConcEnvironment":
+            return ConcRewardGiver(weight=buildOrder.weightOnError)
+
+        if buildOrder.environmentName == "AsmSimulator":        
+            return AsmRewardGiver(weight=buildOrder.weightOnError)
