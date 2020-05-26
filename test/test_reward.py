@@ -13,6 +13,8 @@ from framework import ObservationSequence
 import numpy as np
 from ConcRewardGiverFactory import ConcRewardGiverFactory
 from ConcBuildOrder import ConcBuildOrder
+from AsmRewardGiver import AsmRewardGiver
+from AsmAction import AsmAction
 
 
 class Test(unittest.TestCase):
@@ -55,7 +57,40 @@ class Test(unittest.TestCase):
         rewardGiver = rewardGiverFactory.create(buildOrder)
         assert isinstance(rewardGiver, ConcRewardGiver)
         
+    def test004(self):
+        # check AsmRewardGiver
         
+        SvNh4 = 3
+        
+        rewardGiver = AsmRewardGiver(SvNh4 = SvNh4)
+        assert isinstance(rewardGiver, AsmRewardGiver)
+
+        nMv = 1
+        nPv = 1        
+        for _ in range(2**7):
+            u = np.random.randn(1, nMv).astype(np.float32)
+            action = AsmAction(u)
+            observationSequence = ObservationSequence()
+            
+            y = 10 * np.random.rand(1, nPv).astype(np.float32)
+            observation = ConcObservation(y)
+            observationSequence.add(observation)
+            
+            rewardGiver.weight = 1.0
+            reward = rewardGiver.evaluate(observationSequence, action)
+            
+            assert isinstance(reward, ConcReward)        
+            assert np.all(reward.getValue() <= 0.0) # (*,)        
+            assert reward.getValue()[0] == -1. * max(y[0,0] - SvNh4, 0)
+            
+            rewardGiver.weight = 0.0
+            reward = rewardGiver.evaluate(observationSequence, action)
+            
+            assert isinstance(reward, ConcReward)        
+            assert np.all(reward.getValue() <= 0.0) # (*,)        
+            assert reward.getValue()[0] == -1. * action.getActionOnEnvironment()[0,0]
+        
+
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.test001']
     unittest.main()
