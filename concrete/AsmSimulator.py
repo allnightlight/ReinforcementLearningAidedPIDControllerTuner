@@ -22,7 +22,7 @@ class AsmSimulator(Environment):
         "X_AUT, X_H, X_I, X_PAO, X_PHA, X_PP, X_S, X_TSS".replace(" ", \
         "").split(",")
 
-    def __init__(self, h = 15/60/24, volume = 12, flow = 24, rho = 1/24, pgain = 10000., amplitudeDv = 1.0):
+    def __init__(self, h = 15/60/24, volume = 12, flow = 24, rho = 1/24, pgain = 10000., amplitudePeriodicDv = 1.0):
         '''
         Constructor
         the unit of h is [day]
@@ -36,7 +36,7 @@ class AsmSimulator(Environment):
         self.volume = volume
         self.rho = rho
         self.pgain = pgain
-        self.amplitudeDv = amplitudeDv
+        self.amplitudePeriodicDv = amplitudePeriodicDv
         self.idxSO2 = AsmSimulator.asmVarNames.index("S_O2")
         self.idxNH4 = AsmSimulator.asmVarNames.index("S_NH4")
 
@@ -110,7 +110,7 @@ class AsmSimulator(Environment):
     def generateDv(self):
         
         xInflow = np.array(AsmSimulator.getDefaultInflow()) # (nAsm,)
-        Dv = xInflow * np.exp(np.log(self.amplitudeDv) * np.sin(np.pi * 2 * (self.t % 1.0))) # (nAsm,)
+        Dv = xInflow * np.exp(np.log(self.amplitudePeriodicDv) * np.sin(np.pi * 2 * (self.t % 1.0))) # (nAsm,)
         
         return Dv
     

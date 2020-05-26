@@ -11,7 +11,7 @@ class ConcBuildOrder(BuildOrder):
     '''
 
 
-    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, tConstant, nHiddenValueApproximator, sdPolicy, nActionsSampledFromPolicy, amplitudeDv = 0.1, amplitudePeriodicDv = 1.0, cyclePeriodicDv = 30, agentUseBias = True, policyOptimizer = "Adam", valueFunctionOptimizer = "Adam", learningRatePolicyOptimizer = 1e-3, learningRateValueFunctionOptimizer = 1e-3, weightOnError = 0.5, returnType = "SumOfFiniteRewardSeries", gamma = None, environmentName = "ConcEnvironment"):
+    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, nHiddenValueApproximator, sdPolicy, nActionsSampledFromPolicy, tConstant = 10, amplitudeDv = 0.1, amplitudePeriodicDv = 1.0, cyclePeriodicDv = 30, agentUseBias = True, policyOptimizer = "Adam", valueFunctionOptimizer = "Adam", learningRatePolicyOptimizer = 1e-3, learningRateValueFunctionOptimizer = 1e-3, weightOnError = 0.5, returnType = "SumOfFiniteRewardSeries", gamma = None, environmentName = "ConcEnvironment"):
         '''
         Constructor
         '''

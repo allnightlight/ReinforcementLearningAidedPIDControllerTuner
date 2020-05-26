@@ -28,4 +28,4 @@ class ConcEnvironmentFactory(EnvironmentFactory):
             return ConcEnvironment(buildOrder.tConstant, buildOrder.amplitudeDv, buildOrder.amplitudePeriodicDv, buildOrder.cyclePeriodicDv)
         
         if buildOrder.environmentName == "AsmSimulator":        
-            return AsmSimulator()
+            return AsmSimulator(amplitudePeriodicDv = buildOrder.amplitudePeriodicDv)
