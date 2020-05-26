@@ -76,20 +76,11 @@ class Test(unittest.TestCase):
             observation = ConcObservation(y)
             observationSequence.add(observation)
             
-            rewardGiver.weight = 1.0
             reward = rewardGiver.evaluate(observationSequence, action)
             
             assert isinstance(reward, ConcReward)        
             assert np.all(reward.getValue() <= 0.0) # (*,)        
-            assert reward.getValue()[0] == -1. * max(y[0,0] - SvNh4, 0)
-            
-            rewardGiver.weight = 0.0
-            reward = rewardGiver.evaluate(observationSequence, action)
-            
-            assert isinstance(reward, ConcReward)        
-            assert np.all(reward.getValue() <= 0.0) # (*,)        
-            assert reward.getValue()[0] == -1. * action.getActionOnEnvironment()[0,0]
-        
+                    
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.test001']

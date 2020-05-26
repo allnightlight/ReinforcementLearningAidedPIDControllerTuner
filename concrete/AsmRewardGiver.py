@@ -31,10 +31,12 @@ class AsmRewardGiver(RewardGiver):
         #     S_NH4 - Sv (S_NH4 > Sv),
         #     0          otherwise.
         e = -1. * np.max(np.concatenate((S_NH4 - self.SvNh4, np.zeros(S_NH4.shape)), axis=-1), axis=-1) # (*,)
+        # to minimize the penalty against the excess of NH4 beyond the SV = 3.
         
         u = action.getActionOnEnvironment() # (*, nMv)
         Do = u[:,0] # (*,)
-        reg = -1. * Do # (*,)
+        e += -1. * Do # (*,) to minimize the cost
+        reg = -1. * np.sum(np.abs(u), axis = -1) # (*,) to stabilize the training
         
         r = self.weight * e + (1.0 - self.weight) * reg
         
