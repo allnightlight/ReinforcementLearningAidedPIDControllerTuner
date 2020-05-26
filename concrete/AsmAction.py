@@ -5,8 +5,9 @@ Created on 2020/05/25
 '''
 
 import numpy as np
+from ConcAction import ConcAction
 
-class AsmAction(object):
+class AsmAction(ConcAction):
     '''
     classdocs
     '''
