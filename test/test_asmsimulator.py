@@ -21,8 +21,8 @@ class Test(unittest.TestCase):
             action = AsmAction(u, DoMax=DoMax, DoMin = DoMin)
             assert isinstance(action, AsmAction)
             Do = action.getActionOnEnvironment()
-            assert np.all(Do > DoMin)
-            assert np.all(Do < DoMax)
+            assert np.all(Do >= DoMin - 1e-8)
+            assert np.all(Do <= DoMax + 1e-8)
 
     def test002(self):
         

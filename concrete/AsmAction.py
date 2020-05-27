@@ -22,8 +22,11 @@ class AsmAction(ConcAction):
         
         # u is not used as a manipulated value for the environment,
         # instead, what should be used is the value ceiling u   
-        # after having converted as numpy.ndarray 
-        self.actionOnEnvironment = DoMin + (DoMax - DoMin) * 1./(1.+np.exp(-u)).astype(np.float32) # (*, nMv,)
+        # after having converted as numpy.ndarray
+        actionOnEnvironment = u.copy() * (DoMax - DoMin)/2 + (DoMax + DoMin)/2 # (*, nMv)
+        actionOnEnvironment[u < -1.] = DoMin
+        actionOnEnvironment[u > 1.] = DoMax
+        self.actionOnEnvironment = actionOnEnvironment.astype(np.float32) # (*, nMv,)
         
     def getValue(self):
         return self.u # (*, nMv,)
