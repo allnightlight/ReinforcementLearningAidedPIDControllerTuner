@@ -39,7 +39,7 @@ class AsmRewardGiver(RewardGiver):
             cost = -1. * np.max(np.concatenate((e, np.zeros(e.shape)), axis=-1), axis=-1) # (*,)
             # to minimize the penalty against the excess of NH4 beyond the SV = 3.
         
-            cost[e < 0] += -1. * Do[e < 0] # (*,) to minimize the cost when NH4 does not excess the SV.
+            cost[e[:,0] < 0] += -1. * Do[e[:,0] < 0] # (*,) to minimize the cost when NH4 does not excess the SV.
             reg = -1. * np.sum(np.abs(u), axis = -1) # (*,) to stabilize the training
             
             r = self.weight * cost + (1.0 - self.weight) * reg
