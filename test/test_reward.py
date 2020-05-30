@@ -13,6 +13,9 @@ from framework import ObservationSequence
 import numpy as np
 from ConcRewardGiverFactory import ConcRewardGiverFactory
 from ConcBuildOrder import ConcBuildOrder
+from AsmRewardGiver import AsmRewardGiver
+from AsmAction import AsmAction
+from AsmObservation import AsmObservation
 
 
 class Test(unittest.TestCase):
@@ -55,7 +58,29 @@ class Test(unittest.TestCase):
         rewardGiver = rewardGiverFactory.create(buildOrder)
         assert isinstance(rewardGiver, ConcRewardGiver)
         
+    def test004(self):
+        # check AsmRewardGiver
         
+        rewardGiver = AsmRewardGiver()
+        assert isinstance(rewardGiver, AsmRewardGiver)
+
+        nMv = 1
+        nPv = 1        
+        for _ in range(2**7):
+            u = np.random.randn(1, nMv).astype(np.float32)
+            action = AsmAction(u)
+            observationSequence = ObservationSequence()
+            
+            y = 10 * np.random.rand(1, nPv).astype(np.float32)
+            observation = AsmObservation(y, 1.5, 3.0)
+            observationSequence.add(observation)
+            
+            reward = rewardGiver.evaluate(observationSequence, action)
+            
+            assert isinstance(reward, ConcReward)        
+            assert np.all(reward.getValue() <= 0.0) # (*,)        
+                    
+
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.test001']
     unittest.main()
