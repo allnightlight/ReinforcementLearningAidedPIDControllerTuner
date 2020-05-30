@@ -14,6 +14,8 @@ from ConcBuildOrder import ConcBuildOrder
 from ConcObservation import ConcObservation
 from framework import ObservationSequence, AgentMemento
 import numpy as np
+from AsmAgent import AsmAgent
+from AsmAction import AsmAction
 
 
 class Test(unittest.TestCase):
@@ -115,7 +117,46 @@ class Test(unittest.TestCase):
         assert len(agent0.weights) == 1 # kernel only
         assert len(agent1.weights) == 2 # kernel and bias
         
+    def test008(self):
+        nMv = 1
+        nPv = 1
+        nBatch = 2**5
+        agent = AsmAgent(nMv, sd = 0.1, use_bias = True)
         
+        assert isinstance(agent, AsmAgent)
+        
+        observationSequence = ObservationSequence()
+        y = np.random.randn(nBatch, nPv).astype(np.float32)  # (*, nPv)        
+        observation = ConcObservation(y)
+        observationSequence.add(observation)
+        
+        action = agent(observationSequence)
+        
+        assert isinstance(action, AsmAction)
+        
+    def test009(self):
+        
+        nMv = 10
+        nPv = 3
+        nBatch = 2**5
+        agent = ConcAgent(nMv, sd = 0.0)
+        
+        assert isinstance(agent, ConcAgent)
+        
+        observationSequence = ObservationSequence()
+        y = np.random.randn(nBatch, nPv).astype(np.float32)  # (*, nPv)        
+        observation = ConcObservation(y)
+        observationSequence.add(observation)
+        
+        action = agent(observationSequence)
+        
+        assert isinstance(action, ConcAction)
+        
+        params = agent.getParameters()
+            
+        assert params["gain"].shape == (nPv, nMv)
+        assert params["bias"].shape == (nMv,)
+        assert np.all(params["sd"] >= 0.)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.test001']
