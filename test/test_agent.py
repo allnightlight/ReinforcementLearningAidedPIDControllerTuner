@@ -133,6 +133,30 @@ class Test(unittest.TestCase):
         action = agent(observationSequence)
         
         assert isinstance(action, AsmAction)
+        
+    def test009(self):
+        
+        nMv = 10
+        nPv = 3
+        nBatch = 2**5
+        agent = ConcAgent(nMv, sd = 0.0)
+        
+        assert isinstance(agent, ConcAgent)
+        
+        observationSequence = ObservationSequence()
+        y = np.random.randn(nBatch, nPv).astype(np.float32)  # (*, nPv)        
+        observation = ConcObservation(y)
+        observationSequence.add(observation)
+        
+        action = agent(observationSequence)
+        
+        assert isinstance(action, ConcAction)
+        
+        params = agent.getParameters()
+            
+        assert params["gain"].shape == (nPv, nMv)
+        assert params["bias"].shape == (nMv,)
+        assert np.all(params["sd"] >= 0.)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.test001']
