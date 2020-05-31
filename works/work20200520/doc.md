@@ -18,7 +18,9 @@ which means that
 - actions are proportional to observations of the environment with the constant proportional rate, so-called proportional gain.
 
 Other than those features, 
-- the agent adds random values following the normal distribution with a fixed standard deviation = 0.1 on actions,
+- the agent adds random values following the normal distribution 
+	- with a fixed standard deviation = 0.1 on actions
+	- or with a variable one on actions, 
 - actions pass through the hyperbolic tan function before being acted on the environment in order to make the tuning process stable.
 
 ## Environment
@@ -70,6 +72,7 @@ Table 3.1.1 Training parameters
 |the interval of policy update| 16 |
 | finite or infinite reward series | finite |
 |reward horizon length | 8 |
+| fix standard deviation of policy's probability | True|
 
 The figure 3.1.1 shows the trace of gains along with the training for each value of the weight parameter, respectively.
 You can notice that
@@ -108,6 +111,8 @@ Table 3.2.1 Training parameters
 |the interval of policy update| 16 |
 | finite or infinite reward series | finite |
 |reward horizon length | 8 |
+| fix standard deviation of policy's probability | True|
+
 
 <img src="./img/p_gain_training_process_casestudy002.png" width="480px">
 
@@ -142,6 +147,7 @@ Table 3.3.1 Training parameters
 |the interval of policy update| 2 |
 | finite or infinite reward series | infinite |
 | gamma | 0.9 |
+| fix standard deviation of policy's probability | True|
 
 <img src="./img/p_gain_training_process_casestudy003.png" width="480px">
 
@@ -150,6 +156,37 @@ Fig.3.3.1 The proportional gains over the training process
 <img src="./img/p_gain_distribution_casestudy003.png" width="480px">
 
 Fig.3.3.2 The proportional gains over the training process
+
+## Subsection 3.4: case study #4
+
+This case study investigates the impact of the variable standard deviation of agents' policy.
+The standard deviation is tuned to the logarithm scale.
+This means that a parameter which represents the logarithm of the standard deviation is tuned through the RL-training.
+
+The training parameters and the training results are shown in the table 3.4.1
+, the figure 3.4.1 and the figure 3.4.2, respectively.
+They reveal that the variable standard deviation did not contribute to the improvement of the convergence.
+
+Table 3.4.1 Training parameters
+| name|value|
+|:---:|:---:|
+|both the value and the policy optimizer|Adam|
+|learning rate for value optimization| 0.01 |
+|learning rate for policy optimization| 0.001 |
+|the interval of policy update| 2 |
+| finite or infinite reward series | infinite |
+| gamma | 0.9 |
+| fix standard deviation of policy's probability | False |
+
+<img src="./img/p_gain_training_process_casestudy004.png" width="480px">
+
+Fig.3.4.1 The proportional gains over the training process
+
+<img src="./img/p_gain_distribution_casestudy004.png" width="480px">
+
+Fig.3.4.2 The proportional gains over the training process
+
+
 
 # Summary:
 
