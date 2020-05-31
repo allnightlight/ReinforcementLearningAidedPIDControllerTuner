@@ -24,7 +24,7 @@ class ConcAgentFactory(AgentFactory):
         assert isinstance(buildOrder, ConcBuildOrder)
         
         if buildOrder.environmentName == "ConcEnvironment":
-            return ConcAgent(ConcEnvironment.nMv, buildOrder.sdPolicy, use_bias = buildOrder.agentUseBias, fix_sd=buildOrder.fixPolicySd)
+            return ConcAgent(ConcEnvironment.nMv, buildOrder.sdPolicy, use_bias = buildOrder.agentUseBias, fix_sd=buildOrder.fixPolicySd, fix_scale=buildOrder.fixPolicyScale)
         
         if buildOrder.environmentName == "AsmSimulator":
-            return AsmAgent(AsmSimulator.nMv, buildOrder.sdPolicy, use_bias = buildOrder.agentUseBias, fix_sd=buildOrder.fixPolicySd)
+            return AsmAgent(AsmSimulator.nMv, buildOrder.sdPolicy, use_bias = buildOrder.agentUseBias, fix_sd=buildOrder.fixPolicySd, fix_scale=buildOrder.fixPolicyScale)

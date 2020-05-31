@@ -21,12 +21,17 @@ class ConcAgent(Agent, tf.keras.Model):
     checkpointFolderPath = "./checkpoint"
 
 
-    def __init__(self, nMv, sd, use_bias = True, fix_sd = True):
+    def __init__(self, nMv, sd, use_bias = True, fix_sd = True, fix_scale = True):
         '''
         Constructor
         '''
         super(ConcAgent, self).__init__()
         
+        if fix_scale:
+            self._logScale = tf.zeros(shape=(nMv,)) # (1, nMv)
+        else:
+            self._logScale = tf.Variable(tf.random.normal(shape=(nMv,))) # (1, nMv)
+            
         self.nMv = nMv
         self.gainP = tf.keras.layers.Dense(nMv, use_bias = use_bias) # (*, nPv) -> (*, nMv)
         
@@ -55,7 +60,8 @@ class ConcAgent(Agent, tf.keras.Model):
         obserbation = observationSequence.get(-1) # the latest observation
         y = obserbation.getValue() # (*, nPv)
         
-        _mu = self.gainP(y) # (*, nMv)
+        _mu = self.gainP(y) * tf.math.exp(self._logScale) # (*, nMv)
+            
         if self.fix_sd:
             sd = self.sd # (1, nMv)
         else:
@@ -118,9 +124,9 @@ class ConcAgent(Agent, tf.keras.Model):
     def getParameters(self):
         
         param = dict()
-        param["gain"] = self.gainP.weights[0].numpy() # (1, nMv)
+        param["gain"] = (self.gainP.weights[0] * tf.math.exp(self._logScale)).numpy() # (1, nMv)
         if self.use_bias:
-            param["bias"] = self.gainP.weights[1].numpy() # (1, nMv)
+            param["bias"] = (self.gainP.weights[1] * tf.math.exp(self._logScale)).numpy() # (1, nMv)
         else:
             param["bias"] = np.nan * np.ones((1, self.nMv)) # (1, nMv)
         if self.fix_sd:
