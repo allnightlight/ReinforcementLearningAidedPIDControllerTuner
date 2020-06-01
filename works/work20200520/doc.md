@@ -187,6 +187,30 @@ Fig.3.4.1 The proportional gains over the training process
 Fig.3.4.2 The proportional gains over the training process
 
 
+## Subsection 3.5: case study #5 Multipy the gain with the logscaled parameter
+
+now, editing.
+
+Table 3.5.1 Training parameters
+| name|value|
+|:---:|:---:|
+|both the value and the policy optimizer|Adam|
+|learning rate for value optimization| 0.01 |
+|learning rate for policy optimization| 0.001 |
+|the interval of policy update| 2 |
+| finite or infinite reward series | infinite |
+| gamma | 0.9 |
+| fix standard deviation of policy's probability | False |
+| fix scale of policy's probability | False or True |
+
+<img src="./img/p_gain_training_process_casestudy005.png" width="480px">
+
+Fig.3.5.1 The proportional gains over the training process
+
+<img src="./img/p_gain_distribution_casestudy005.png" width="480px">
+
+Fig.3.5.2 The proportional gains over the training process
+
 
 # Summary:
 
