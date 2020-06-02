@@ -159,13 +159,34 @@ Fig.3.3.2 The proportional gains over the training process
 
 ## Subsection 3.4: case study #4
 
-This case study investigates the impact of the variable standard deviation of agents' policy.
-The standard deviation is tuned to the logarithm scale.
-This means that a parameter which represents the logarithm of the standard deviation is tuned through the RL-training.
+Seeing the result of the case study #3,
+the convergence with the largest weight parameter should be made efforts to improve
+since the gains with the weight parameter = 0.5 or 0.1 have converges better.
+Thinking that with larger weight parameter the priority on the error becomes larger rather than the action, 
+it's normal to take longer time to approach the optimal solution.
+From now on, let think the case with the weight parameter = 0.9, more intensively.
 
-The training parameters and the training results are shown in the table 3.4.1
-, the figure 3.4.1 and the figure 3.4.2, respectively.
-They reveal that the variable standard deviation did not contribute to the improvement of the convergence.
+In all the case study #1, #2 and #3, the standard deviation of the policy's probability has been fixed,
+though, regarding it as a tunable parameter in a neural network and tuning it through trainings are normal in the context of the actor critique learning.
+It may be more efficient because the variable standard deviation can lead to better exploration and then better acceleration.
+
+In this case study 4, 
+agents were trained under the training parameter shown in the table 3.4.1.
+Note,
+- weight parameter, so-called, weightOnError is fixed at 0.9,
+- the iteration number was doubled to all the previous case studies(#1, #2 and #3)
+
+The figure 3.4.1 is the convergence of the trained standard deviations over the trainings.
+While the value of the standard deviation is fixed with "fixPolicySd = 1",
+its values with "fixPolicySd = 0" are decreasing as training proceed, however,
+it has not reached at the value = 0.1, yet.
+
+The figure 3.4.2 and the figure 3.4.3 show the trained proportional gain.
+With the case of the fixed standard deviation,
+they converged more rapidly and with slightly more stable.
+It's probably because the still high trained standard deviations at the end of trainings
+causes slowing down the convergence.
+This might be an example of the conflict between the exploitation and the exploration.
 
 Table 3.4.1 Training parameters
 | name|value|
@@ -176,15 +197,20 @@ Table 3.4.1 Training parameters
 |the interval of policy update| 2 |
 | finite or infinite reward series | infinite |
 | gamma | 0.9 |
-| fix standard deviation of policy's probability | False |
+| weightOnError | 0.9 |
+| fix standard deviation of policy's probability | True or False |
 
-<img src="./img/p_gain_training_process_casestudy004.png" width="480px">
+<img src="./img/policy_sd_training_process_casestudy004a.png" width="480px">
 
-Fig.3.4.1 The proportional gains over the training process
+Fig.3.4.1 The standard deviation of the policy's probability over the training process
 
-<img src="./img/p_gain_distribution_casestudy004.png" width="480px">
+<img src="./img/p_gain_training_process_casestudy004a.png" width="480px">
 
 Fig.3.4.2 The proportional gains over the training process
+
+<img src="./img/p_gain_distribution_casestudy004a.png" width="480px">
+
+Fig.3.4.3 The proportional gains over the training process
 
 
 ## Subsection 3.5: case study #5 Multipy the gain with the logscaled parameter
