@@ -35,20 +35,17 @@ class ConcAgent(Agent, tf.keras.Model):
         self.nMv = nMv
         self.gainP = tf.keras.layers.Dense(nMv, use_bias = use_bias) # (*, nPv) -> (*, nMv)
         
-        self.fix_sd = fix_sd
         if fix_sd:
 # This agent has the fixed standard deviation, sd, of the normal density function which represents the policy.
 # It means that the policy is represented as like this:
 # pi(a|s) = Normal(a|mu, sd), 
 # where mu = a neural network(s) 
 # and sd is the parameter given at the initialization.
-            self.sd = sd # (1, nMv)
-            self._logSd = None
+            self._logSd = tf.ones(shape=(1, nMv)) * np.log(sd + 1e-16) # (1, nMv)
         else:        
 # If fix_sd is True, this agent will output the Mv added by random values with the tunable standard deviation
 # Precisely, pi(u|y), where pi,u,y are the probability of the agent, u: Mv and y: observation, respectively,
 # pi(u|y) = Normal distribution(u; mu, sd), mu = Gain * y + bias, sd: variable(not fixed).
-            self.sd = None
             self._logSd = tf.Variable(tf.random.normal(shape=(1, nMv))) # (1, nMv)
         
         self.use_bias = use_bias
@@ -62,16 +59,16 @@ class ConcAgent(Agent, tf.keras.Model):
         
         _mu = self.gainP(y) * tf.math.exp(self._logScale) # (*, nMv)
             
-        if self.fix_sd:
-            sd = self.sd # (1, nMv)
-        else:
-            sd = np.exp(self._logSd.numpy()) # (1, nMv)
-        return _mu, sd
+        _sd = tf.math.exp(self._logSd) # (1, nMv)
+        _logSd = self._logSd # (1, nMv)
+        
+        return _mu, _sd, _logSd
     
     def sampleMvFromPi(self, observationSequence):
-        _mu, sd = self.getProbabilisticFunctionParameter(observationSequence)
-        # _mu: (*, nMv), sd: (*, nMv)
+        _mu, _sd, _ = self.getProbabilisticFunctionParameter(observationSequence)
+        # _mu: (*, nMv), _sd: (*, nMv)
         mu = _mu.numpy() # (*, nMv)
+        sd = _sd.numpy() # (*, nMv)
 
         u = mu + np.random.randn(mu.shape[0], 1) * sd # (*, nMv)
         
@@ -87,19 +84,11 @@ class ConcAgent(Agent, tf.keras.Model):
     
     def loglikelihood(self, observationSequence, action):
         
-        if self.fix_sd:
-            _mu, sd = self.getProbabilisticFunctionParameter(observationSequence)
-            # _mu: (*, nMv), sd: (*, nMv)
-            
-            u = action.getValue() # (*, nMv)
-    
-            _ll = tf.reduce_sum(-tf.math.log(sd) - (u - _mu)**2/(sd**2)/2, axis=-1, keepdims=True) # (*, 1)
-        else:
-            _mu, _ = self.getProbabilisticFunctionParameter(observationSequence)
+        _mu, _, _logSd = self.getProbabilisticFunctionParameter(observationSequence)
 
-            u = action.getValue() # (*, nMv)
-    
-            _ll = tf.reduce_sum(-self._logSd - (u - _mu)**2/2 * tf.math.exp(-2 * self._logSd), axis=-1, keepdims=True) # (*, 1)
+        u = action.getValue() # (*, nMv)
+
+        _ll = tf.reduce_sum(-self._logSd - (u - _mu)**2/2 * tf.math.exp(-2 * _logSd), axis=-1, keepdims=True) # (*, 1)
             
         return _ll #(*, 1)
         
@@ -123,15 +112,14 @@ class ConcAgent(Agent, tf.keras.Model):
         
     def getParameters(self):
         
+        _scale = tf.math.exp(self._logScale) # (1, nMv)
+        
         param = dict()
-        param["gain"] = (self.gainP.weights[0] * tf.math.exp(self._logScale)).numpy() # (1, nMv)
+        param["gain"] = (self.gainP.weights[0] * _scale).numpy() # (1, nMv)
         if self.use_bias:
-            param["bias"] = (self.gainP.weights[1] * tf.math.exp(self._logScale)).numpy() # (1, nMv)
+            param["bias"] = (self.gainP.weights[1] * _scale).numpy() # (1, nMv)
         else:
             param["bias"] = np.nan * np.ones((1, self.nMv)) # (1, nMv)
-        if self.fix_sd:
-            param["sd"] = self.sd  # ()
-        else:
-            param["sd"] = np.exp(self._logSd.numpy())  # (1, nMv)
+        param["sd"] = (_scale * np.exp(self._logSd)).numpy()  # (1, nMv)
             
         return param
