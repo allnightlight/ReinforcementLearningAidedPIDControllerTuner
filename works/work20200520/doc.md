@@ -174,18 +174,18 @@ In this case study 4,
 agents were trained under the training parameter shown in the table 3.4.1.
 Note,
 - weight parameter, so-called, weightOnError is fixed at 0.9,
-- the iteration number was doubled to all the previous case studies(#1, #2 and #3)
+- the iteration number was doubled to all the previous case studies(#1, #2 and #3).
 
-The figure 3.4.1 is the convergence of the trained standard deviations over the trainings.
-While the value of the standard deviation is fixed with "fixPolicySd = 1",
+The figure 3.4.1 shows the convergence of the trained standard deviations over the trainings.
+While the values of the standard deviation are fixed with "fixPolicySd = 1" at 0.1,
 its values with "fixPolicySd = 0" are decreasing as training proceed, however,
 it has not reached at the value = 0.1, yet.
 
-The figure 3.4.2 and the figure 3.4.3 show the trained proportional gain.
+The figure 3.4.2 and the figure 3.4.3 show the development of the trained proportional gains over the training process.
 With the case of the fixed standard deviation,
 they converged more rapidly and with slightly more stable.
-It's probably because the still high trained standard deviations at the end of trainings
-causes slowing down the convergence.
+It's probably because the higher trained standard deviations all over the training process
+cause to slow down the convergence.
 This might be an example of the conflict between the exploitation and the exploration.
 
 Table 3.4.1 Training parameters
