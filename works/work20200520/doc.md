@@ -219,7 +219,34 @@ Fig.3.4.2(b) The proportional gains over the training process
 
 ## Subsection 3.5: case study #5 Multipy the gain with the logscaled parameter
 
-now, editing.
+The uncertainty of scale is a concern in the reinforcement learning framework.
+For example, in this case, the reward on the steady state increases almost with the proportion to the inverse of gain.
+Seeing that the parameters are updated linearly, it can take much iteration to obtain more reward.
+
+Adopting a logarithmic scale parameter: logScale is one way to mitigate the concern.
+More precisely, the agent outputs the action: `u` in a normal way and then
+the action is multiplied by the exponent of the scale parameter, say `exp(logScale)*u`,  before acting on the environment.
+Thanks for updating the parameter in the logarithmic scale, it can be expected that it converges more fast.
+
+The agents were trained by using the training parameters in the table 3.5.1.
+The figure 3.5.1(a) and (b) show the training process of the standard deviation of the agents.
+And the trained gains are shown in the figure 3.5.2(a) and (b).
+Note that the "outlier" cases, where the gains were below the threshold: -3, are omitted from the above figures
+and you could see all the trained gains in the figure 3.5.3. 
+The "outlier" cases would not be taken into account in the later description.
+
+The results of the standard deviations of the agents tell us that 
+the cases with the tunable logarithmic scale: "fixPolicyScale = 0" can lead to, 
+even beginning with the large variety of the exploration, 
+converging as fast as the cases with the fixed scale: "fixPolicyScale = 1".
+
+In the case of gain, the same thing can be observed 
+and the gains with the tunable scale evolve faster than the ones with the fixed scale.
+However, 
+as mentioned before about the figure 3.5.3, the training process is sometime sucked down an unstable state
+since the gains are updated too rapidly.
+Extra regularization terms should have been added to the reward.
+
 
 Table 3.5.1 Training parameters
 | name|value|
