@@ -286,4 +286,7 @@ Fig.3.5.3 The proportional gains over the training process with outliers
 
 # Summary:
 
-- Case study #1 tells us that the PID parameter tuning algorithm powered by the RL is helpful, however, it remains the question in the convergence.
+In this text,
+the effects of some useful tips were confirmed
+by  using the pair of the first-order time-delay environment
+and the proportional gain controller agent.
