@@ -176,17 +176,17 @@ Note,
 - weight parameter, so-called, weightOnError is fixed at 0.9,
 - the iteration number was doubled to all the previous case studies(#1, #2 and #3).
 
-The figure 3.4.1 shows the convergence of the trained standard deviations over the trainings.
+The figure 3.4.1(a) and (b) show the convergence of the trained standard deviations over the trainings and its boxplots.
 While the values of the standard deviation are fixed with "fixPolicySd = 1" at 0.1,
 its values with "fixPolicySd = 0" are decreasing as training proceed, however,
-it has not reached at the value = 0.1, yet.
+it has reached at the larger value, say near 0.4.
 
-The figure 3.4.2 and the figure 3.4.3 show the development of the trained proportional gains over the training process.
-With the case of the fixed standard deviation,
+The figure 3.4.2(a) and (b) show the development of the trained proportional gains over the training process.
+With the case of the tunable standard deviation with "fixPolicySd = 0",
 they converged more rapidly and with slightly more stable.
 It's probably because the higher trained standard deviations all over the training process
-cause to slow down the convergence.
-This might be an example of the conflict between the exploitation and the exploration.
+cause to speed up the convergence.
+It might be interpreted that the higher standard deviation and then the wider exploration can lead to the better convergence.
 
 Table 3.4.1 Training parameters
 | name|value|
@@ -202,15 +202,19 @@ Table 3.4.1 Training parameters
 
 <img src="./img/policy_sd_training_process_casestudy004a.png" width="480px">
 
-Fig.3.4.1 The standard deviation of the policy's probability over the training process
+Fig.3.4.1(a) The standard deviation of the policy's probability over the training process
+
+<img src="./img/policy_sd_distribution_casestudy004a.png" width="480px">
+
+Fig.3.4.1(b) The standard deviation of the policy's probability over the training process
 
 <img src="./img/p_gain_training_process_casestudy004a.png" width="480px">
 
-Fig.3.4.2 The proportional gains over the training process
+Fig.3.4.2(a) The proportional gains over the training process
 
 <img src="./img/p_gain_distribution_casestudy004a.png" width="480px">
 
-Fig.3.4.3 The proportional gains over the training process
+Fig.3.4.2(b) The proportional gains over the training process
 
 
 ## Subsection 3.5: case study #5 Multipy the gain with the logscaled parameter
