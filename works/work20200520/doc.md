@@ -182,7 +182,7 @@ its values with "fixPolicySd = 0" are decreasing as training proceed, however,
 it has reached at the larger value, say near 0.4.
 
 The figure 3.4.2(a) and (b) show the development of the trained proportional gains over the training process.
-With the case of the tunable standard deviation with "fixPolicySd = 0",
+With the case of the tunable standard deviation: "fixPolicySd = 0",
 they converged more rapidly and with slightly more stable.
 It's probably because the higher trained standard deviations all over the training process
 cause to speed up the convergence.
@@ -233,13 +233,28 @@ Table 3.5.1 Training parameters
 | fix standard deviation of policy's probability | False |
 | fix scale of policy's probability | False or True |
 
-<img src="./img/p_gain_training_process_casestudy005.png" width="480px">
 
-Fig.3.5.1 The proportional gains over the training process
+<img src="./img/policy_sd_training_process_casestudy005c.png" width="480px">
 
-<img src="./img/p_gain_distribution_casestudy005.png" width="480px">
+Fig.3.5.1(a) The standard deviation of the policy's probability over the training process without outliers
 
-Fig.3.5.2 The proportional gains over the training process
+<img src="./img/policy_sd_distribution_casestudy005c.png" width="480px">
+
+Fig.3.5.1(b) The standard deviation of the policy's probability over the training process without outliers
+
+<img src="./img/p_gain_training_process_casestudy005c.png" width="480px">
+
+Fig.3.5.2(a) The proportional gains over the training process without outliers
+
+<img src="./img/p_gain_distribution_casestudy005c.png" width="480px">
+
+Fig.3.5.2(b) The proportional gains over the training process without outliers
+
+<img src="./img/p_gain_training_process_casestudy005c_with_outliers.png" width="480px">
+
+Fig.3.5.3 The proportional gains over the training process with outliers
+
+
 
 
 # Summary:
