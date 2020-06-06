@@ -17,13 +17,13 @@ class AsmSimulator(Environment):
     '''
     
     nMv = 1
-    nPv = -1
+    nPv = 1
 
     asmVarNames = "S_A, S_ALK, S_F, S_I, S_N2, S_NH4, S_NO3, S_O2, S_PO4, "\
         "X_AUT, X_H, X_I, X_PAO, X_PHA, X_PP, X_S, X_TSS".replace(" ", \
         "").split(",")
 
-    def __init__(self, h = 15/60/24, volume = 12, flow = 24, rho = 1/24, pgain = 10000., amplitudePeriodicDv = 1.0, SvNh4 = 3.0):
+    def __init__(self, h = 15/60/24, volume = 12, flow = 24, rho = 1/24, pgain = 100., amplitudePeriodicDv = 1.0, SvNh4 = 3.0, timeIntegral = 1/24/4):
         '''
         Constructor
         the unit of h is [day]
@@ -37,6 +37,7 @@ class AsmSimulator(Environment):
         self.volume = volume
         self.rho = rho
         self.pgain = pgain
+        self.timeIntegral = timeIntegral 
         self.amplitudePeriodicDv = amplitudePeriodicDv
         self.idxSO2 = AsmSimulator.asmVarNames.index("S_O2")
         self.idxNH4 = AsmSimulator.asmVarNames.index("S_NH4")
@@ -55,7 +56,7 @@ class AsmSimulator(Environment):
            1.74268503e+01, 3.98470015e-01, 1.71534735e+01, 2.95591312e+00,
            4.57085240e+00, 3.86973112e+01, 1.08088987e+03, 9.62959386e+02,
            4.42990298e-05, 1.94593829e-08, 3.94257857e-05, 2.75683299e+01,
-           2.61009185e+03])
+           2.61009185e+03, 0.])
             
     def observe(self):
         S_NH4 =self.x[self.idxNH4] # (,)
@@ -79,13 +80,15 @@ class AsmSimulator(Environment):
         self.x = self.odeHandler.y
     
     def f(self, t, x, Dv, Mv):
-        # x: (nAsm,)
+        # x: (nAsm+1,)
         # Dv: (*, ), Mv: (*, )
         
-        xInflow = Dv # (nAsm,)
+        xAsm = x[:self.nAsm] # (nAsm,)
+        xAsmInflow = Dv # (nAsm,)
         Do = Mv # (,)
         
-        dxdt = np.zeros(self.nAsm) # (nAsm,)
+        dxdt = np.zeros(self.nAsm+1) # (nAsm+1,)
+        dxAsmdt = dxdt[:self.nAsm] # (nAsm,)
         retentionTime = self.volume/self.flow
         
         # Volume * dX/dt = 
@@ -101,14 +104,19 @@ class AsmSimulator(Environment):
         #
         # dSO2/dt += Gain * max(DO - SO2, 0)
         
-        dxdt += xInflow/retentionTime # (nAsm,)
-        dxdt[self.isSoluble] -= self.x[self.isSoluble]/retentionTime # (nS,)
-        dxdt[~self.isSoluble] -= self.rho * self.x[~self.isSoluble]/retentionTime # (nX,)
+        dxAsmdt += xAsmInflow/retentionTime # (nAsm,)
+        dxAsmdt[self.isSoluble] -= xAsm[self.isSoluble]/retentionTime # (nS,)
+        dxAsmdt[~self.isSoluble] -= self.rho * xAsm[~self.isSoluble]/retentionTime # (nX,)
         
-        dxdtAsm= np.array(AsmSimulator.getBiologicalProcess(*x)) # (nAsm,)         
-        dxdt += dxdtAsm # (nAsm,)
+        dxAsmdtAsm= np.array(AsmSimulator.getBiologicalProcess(*xAsm)) # (nAsm,)         
+        dxAsmdt += dxAsmdtAsm # (nAsm,)
+
+        e = Do - xAsm[self.idxSO2]
+        eCum = x[self.nAsm] # cumulated error
         
-        dxdt[self.idxSO2] += self.pgain * max(Do - x[self.idxSO2], 0) # (,)
+        dxAsmdt[self.idxSO2] += self.pgain * max(e + eCum, 0)  # (,)
+
+        dxdt[self.nAsm] = e/self.timeIntegral
         
         return dxdt # (nAsm,)
     
