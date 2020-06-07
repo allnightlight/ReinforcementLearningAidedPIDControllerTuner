@@ -120,6 +120,6 @@ class ConcAgent(Agent, tf.keras.Model):
             param["bias"] = (self.gainP.weights[1] * _scale).numpy() # (1, nMv)
         else:
             param["bias"] = np.nan * np.ones((1, self.nMv)) # (1, nMv)
-        param["sd"] = (_scale * np.exp(self._logSd)).numpy()  # (1, nMv)
+        param["sd"] = (_scale * tf.exp(self._logSd)).numpy()  # (1, nMv)
             
         return param
