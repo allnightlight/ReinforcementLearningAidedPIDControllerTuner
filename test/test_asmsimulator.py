@@ -35,7 +35,7 @@ class Test(unittest.TestCase):
         assert asmSimulator.t is not None
         assert asmSimulator.x is not None
         
-        assert np.all(asmSimulator.x > 0.)
+        assert np.all(asmSimulator.x > 0. - 1e-16)
         
         for _ in range(2**4):
             action = AsmAction(np.random.randn(1, 1)) # (1, nMv = 1)
