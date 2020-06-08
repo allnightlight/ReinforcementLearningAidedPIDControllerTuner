@@ -14,13 +14,14 @@ class AsmRewardGiver(RewardGiver):
     classdocs
     '''
 
-    def __init__(self, weight = 0.5, penaltyType = 1):
+    def __init__(self, weight = 0.5, weightOnCost = 0.5, penaltyType = 1):
         '''
         Constructor
         '''
         
         self.weight = weight
         self.penaltyType = penaltyType
+        self.weightOnCost = weightOnCost
         
     def evaluate(self, observationSequence, action):
         assert isinstance(action, AsmAction)
@@ -34,12 +35,12 @@ class AsmRewardGiver(RewardGiver):
 
         if self.penaltyType == 0:        
             # cost =
-            #     S_NH4 - Sv (S_NH4 > Sv),
-            #     DO          otherwise.
-            cost = -1. * np.max(np.concatenate((e, np.zeros(e.shape)), axis=-1), axis=-1) # (*,)
+            #     (1-weightOnCost) * (S_NH4 - Sv) (S_NH4 > Sv),
+            #         weightOnCost * DO          otherwise.
+            cost = -1. * (1. - self.weightOnCost) * np.max(np.concatenate((e, np.zeros(e.shape)), axis=-1), axis=-1) # (*,)
             # to minimize the penalty against the excess of NH4 beyond the SV = 3.
         
-            cost[e[:,0] < 0] += -1. * Do[e[:,0] < 0] # (*,) to minimize the cost when NH4 does not excess the SV.
+            cost[e[:,0] < 0] += -1. * self.weightOnCost * Do[e[:,0] < 0] # (*,) to minimize the cost when NH4 does not excess the SV.
             reg = -1. * np.sum(np.abs(u), axis = -1) # (*,) to stabilize the training
             
             r = self.weight * cost + (1.0 - self.weight) * reg
