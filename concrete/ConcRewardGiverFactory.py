@@ -25,4 +25,4 @@ class ConcRewardGiverFactory(RewardGiverFactory):
             return ConcRewardGiver(weight=buildOrder.weightOnError)
 
         if buildOrder.environmentName == "AsmSimulator":        
-            return AsmRewardGiver(weight=buildOrder.weightOnError, penaltyType = buildOrder.asmPenaltyType)
+            return AsmRewardGiver(weight=buildOrder.weightOnError, penaltyType = buildOrder.asmPenaltyType, weightOnCost=buildOrder.asmWeightOnCost)

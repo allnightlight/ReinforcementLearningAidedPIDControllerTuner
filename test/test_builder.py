@@ -130,6 +130,9 @@ class Test(unittest.TestCase):
                     , nActionsSampledFromPolicy = 2**1
                     , amplitudeDv = 0.0
                     , environmentName = "AsmSimulator"
+                    , asmPenaltyType = 0
+                    , asmWeightOnCost = 0.9
+                    , amplitudePeriodicDv= 2.0                    
                     )
         
         buildOrders.add(buildOrder)
