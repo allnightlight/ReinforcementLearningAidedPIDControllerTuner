@@ -46,7 +46,7 @@ class ConcAgent(Agent, tf.keras.Model):
 # If fix_sd is True, this agent will output the Mv added by random values with the tunable standard deviation
 # Precisely, pi(u|y), where pi,u,y are the probability of the agent, u: Mv and y: observation, respectively,
 # pi(u|y) = Normal distribution(u; mu, sd), mu = Gain * y + bias, sd: variable(not fixed).
-            self._logSd = tf.Variable(tf.random.normal(shape=(1, nMv))) # (1, nMv)
+            self._logSd = tf.Variable(tf.ones(shape=(1, nMv)) * np.log(sd + 1e-16)) # (1, nMv)
         
         self.use_bias = use_bias
         
