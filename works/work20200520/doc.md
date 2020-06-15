@@ -282,6 +282,56 @@ Fig.3.5.2(b) The proportional gains over the training process without outliers
 Fig.3.5.3 The proportional gains over the training process with outliers
 
 
+## Subsection 3.6: case study #6 Varying the size of initial standard deviation of policy
+
+There is the lesson about the exploration that
+exploring widely in early stages of training
+and shrinking the extent of exploration can lead to better convergence.
+In our case, the standard deviation of the policy might well start with 
+larger value to train the controller's parameters faster.
+In fact, in the previous case study, the agent beginning with small standard deviation was trained more slowly.
+
+This case study would clarify the effect of the size of the initial standard deviation of the agent.
+The agents were trained with the various size of the initial standard deviation shown in the table 3.6.1.
+Each dimension of the initial standard deviation can be seen small, medium and large
+since the action has been normalized.
+
+The figures: 3.6.1(a) and 3.6.1(b), are the trained standard deviations along side the training process.
+The figures: 3.6.2(a) and 3.6.2(b), are the trained proportional gains of the controller along side the training process.
+Summarize here:
+- The majorities of the agents with the small initial standard deviation were trained most slowly, especially the trained standard devation are likely to remain around the initial value.
+- The agent beginning with the medium size of the standard deviation converged fastest among all the three cases.
+- With the largest size of the initial standard deviation, the gain converged less rapidly than the cases with the medium initial standard deviation, however, they could converge consistently. This may indicate that, if we don't know the proper size of exploration, in this case the unknown proper size of the standard deviation, it's better to begin with relatively broader exploration rather than narrower or limited one.
+
+Table 3.6.1 Training parameters
+| name|value|
+|:---:|:---:|
+|both the value and the policy optimizer|Adam|
+|learning rate for value optimization| 0.01 |
+|learning rate for policy optimization| 0.001 |
+|the interval of policy update| 2 |
+| finite or infinite reward series | infinite |
+| gamma | 0.9 |
+| fix standard deviation of policy's probability | False |
+| fix scale of policy's probability | True |
+| initial standard deviation| 0.1(small), 1.0(medium), 10.0(large)|
+
+
+<img src="./img/policy_sd_training_process_casestudy006a.png" width="480px">
+
+Fig.3.6.1(a) The standard deviation of the policy's probability over the training process without outliers
+
+<img src="./img/policy_sd_distribution_casestudy006a.png" width="480px">
+
+Fig.3.6.1(b) The standard deviation of the policy's probability over the training process without outliers
+
+<img src="./img/p_gain_training_process_casestudy006a.png" width="480px">
+
+Fig.3.6.2(a) The proportional gains over the training process without outliers
+
+<img src="./img/p_gain_distribution_casestudy006a.png" width="480px">
+
+Fig.3.6.2(b) The proportional gains over the training process without outliers
 
 
 # Summary:
