@@ -290,15 +290,15 @@ and shrinking the extent of exploration as training proceeds
 can lead to better convergence.
 In our case, the standard deviation of the policy might well start with 
 larger value to train the controller's parameters faster.
-In fact, in the previous case study, there were some cases where agents beginning with small standard deviations were trained more slowly.
+In fact, in previous case studies, there were some cases where agents beginning with small standard deviations were trained more slowly.
 
-This case study would clarify the effect of the size of the initial standard deviation of the agent.
+This case study clarifies the effect of the size of the initial standard deviation of the agent.
 The agents were trained with the various sizes of the initial standard deviation shown in the table 3.6.1.
 Each dimension of the initial standard deviation can be seen small, medium and large
 since the action has been normalized.
 
-The figures: 3.6.1(a) and 3.6.1(b), are the trained standard deviations along side the training process.
-The figures: 3.6.2(a) and 3.6.2(b), are the trained proportional gains of the controller along side the training process.
+The figures: 3.6.1(a) and (b), are the trained standard deviations alongside the training process.
+The figures: 3.6.2(a) and (b), are the trained proportional gains of the controller alongside the training process.
 Here is the summary.
 - The majorities of the agents with the smallest initial standard deviation were trained most slowly, especially the trained standard deviations were likely to remain around the initial value.
 - The agent beginning with the medium size of the standard deviation converged fastest among all the three cases.
@@ -319,19 +319,19 @@ Table 3.6.1 Training parameters
 
 <img src="./img/policy_sd_training_process_casestudy006a.png" width="480px">
 
-Fig.3.6.1(a) The standard deviation of the policy's probability over the training process without outliers
+Fig.3.6.1(a) The standard deviation of the policy's probability over the training process
 
 <img src="./img/policy_sd_distribution_casestudy006a.png" width="480px">
 
-Fig.3.6.1(b) The standard deviation of the policy's probability over the training process without outliers
+Fig.3.6.1(b) The standard deviation of the policy's probability over the training process
 
 <img src="./img/p_gain_training_process_casestudy006a.png" width="480px">
 
-Fig.3.6.2(a) The proportional gains over the training process without outliers
+Fig.3.6.2(a) The proportional gains over the training process
 
 <img src="./img/p_gain_distribution_casestudy006a.png" width="480px">
 
-Fig.3.6.2(b) The proportional gains over the training process without outliers
+Fig.3.6.2(b) The proportional gains over the training process
 
 
 # Summary:
