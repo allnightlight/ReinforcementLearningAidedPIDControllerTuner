@@ -56,6 +56,32 @@ class Test(unittest.TestCase):
         valueFunctionApproximator = valueFunctionApproximatorFactory.create(buildOrder)
         assert isinstance(valueFunctionApproximator, ConcValueFunctionApproximator)
 
+    def test003(self):
+        
+        nHiddenValueApproximator = 2**3
+        nBatch = 2**5
+        
+        valueFunctionApproximator = ConcValueFunctionApproximator(nHiddenValueApproximator, enable_i_component=True, enable_d_component=True)
+        
+        assert isinstance(valueFunctionApproximator, ConcValueFunctionApproximator)
+        
+        observationSequence = ObservationSequence()
+        
+        for _ in range(10):
+            y = np.random.randn(nBatch, ConcEnvironment.nPv).astype(np.float32) # (*, nPv)
+            observation = ConcObservation(y)
+            observationSequence.add(observation)
+
+        u = np.random.randn(nBatch, ConcEnvironment.nMv) # (*, nMv)        
+        action = ConcAction(u)
+
+        value = valueFunctionApproximator(observationSequence, action)
+        
+        assert isinstance(value, ConcValue)
+        
+        _aValue, _sValue = value.getValue()
+        assert _aValue.shape == (nBatch, 1)
+        assert _sValue.shape == (nBatch, 1)
         
 
 if __name__ == "__main__":

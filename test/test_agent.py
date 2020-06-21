@@ -157,6 +157,35 @@ class Test(unittest.TestCase):
         assert params["gain"].shape == (nPv, nMv)
         assert params["bias"].shape == (nMv,)
         assert np.all(params["sd"] >= 0.)
+        
+    def test010(self):
+        
+        nMv = 10
+        nPv = 3
+        nBatch = 2**5
+        agent = ConcAgent(nMv, sd = 0., enable_i_component=True, enable_d_component=True)
+        nSeq = 10
+        
+        assert isinstance(agent, ConcAgent)
+        
+        observationSequence = ObservationSequence()
+        for _ in range(nSeq):
+            y = np.random.randn(nBatch, nPv).astype(np.float32)  # (*, nPv)        
+            observation = ConcObservation(y)
+            observationSequence.add(observation)
+        
+        action = agent(observationSequence)
+        
+        assert isinstance(action, ConcAction)
+        
+        params = agent.getParameters()
+            
+        assert params["gain"].shape == (nPv, nMv)
+        assert params["gainI"].shape == (nPv, nMv)
+        assert params["gainD"].shape == (nPv, nMv)        
+        assert params["bias"].shape == (nMv,)
+        assert np.all(params["sd"] >= 0.)
+
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.test001']
