@@ -11,7 +11,7 @@ class ConcBuildOrder(BuildOrder):
     '''
 
 
-    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, nHiddenValueApproximator, sdPolicy, nActionsSampledFromPolicy, tConstant = 10, amplitudeDv = 0.1, amplitudePeriodicDv = 1.0, cyclePeriodicDv = 30, agentUseBias = True, policyOptimizer = "Adam", valueFunctionOptimizer = "Adam", learningRatePolicyOptimizer = 1e-3, learningRateValueFunctionOptimizer = 1e-3, weightOnError = 0.5, returnType = "SumOfFiniteRewardSeries", gamma = None, environmentName = "ConcEnvironment", asmPenaltyType = 0, fixPolicySd = True, fixPolicyScale = True, asmWeightOnCost = 0.5):
+    def __init__(self, nIteration, nSeq, nHorizonValueOptimization, nIntervalPolicyOptimization, nBatchPolicyOptimization, nSaveInterval, description, nHiddenValueApproximator, sdPolicy, nActionsSampledFromPolicy, tConstant = 10, amplitudeDv = 0.1, amplitudePeriodicDv = 1.0, cyclePeriodicDv = 30, agentUseBias = True, policyOptimizer = "Adam", valueFunctionOptimizer = "Adam", learningRatePolicyOptimizer = 1e-3, learningRateValueFunctionOptimizer = 1e-3, weightOnError = 0.5, returnType = "SumOfFiniteRewardSeries", gamma = None, environmentName = "ConcEnvironment", asmPenaltyType = 0, fixPolicySd = True, fixPolicyScale = True, asmWeightOnCost = 0.5, agentEnableIcomponent = False , agentEnableDcomponent = False ):
         '''
         Constructor
         '''
@@ -38,6 +38,8 @@ class ConcBuildOrder(BuildOrder):
         self.fixPolicySd = fixPolicySd
         self.fixPolicyScale = fixPolicyScale
         self.asmWeightOnCost = asmWeightOnCost 
+        self.agentEnableIcomponent = agentEnableIcomponent
+        self.agentEnableDcomponent = agentEnableDcomponent
 
                 
     def toDict(self):
@@ -69,5 +71,7 @@ class ConcBuildOrder(BuildOrder):
             asmPenaltyType = self.asmPenaltyType,
             fixPolicySd = self.fixPolicySd,
             fixPolicyScale = self.fixPolicyScale,
-            asmWeightOnCost = self.asmWeightOnCost, 
+            asmWeightOnCost = self.asmWeightOnCost,
+            agentEnableIcomponent = self.agentEnableIcomponent, 
+            agentEnableDcomponent = self.agentEnableDcomponent,  
             )

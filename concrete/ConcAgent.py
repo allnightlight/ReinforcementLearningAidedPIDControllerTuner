@@ -21,7 +21,7 @@ class ConcAgent(Agent, tf.keras.Model):
     checkpointFolderPath = "./checkpoint"
 
 
-    def __init__(self, nMv, sd, use_bias = True, fix_sd = True, fix_scale = True):
+    def __init__(self, nMv, sd, use_bias = True, fix_sd = True, fix_scale = True, enable_i_component = False, enable_d_component = False):
         '''
         Constructor
         '''
@@ -34,6 +34,12 @@ class ConcAgent(Agent, tf.keras.Model):
             
         self.nMv = nMv
         self.gainP = tf.keras.layers.Dense(nMv, use_bias = use_bias) # (*, nPv) -> (*, nMv)
+        self.gainI = tf.keras.layers.Dense(nMv, use_bias = False) # (*, nPv) -> (*, nMv)
+        self.gainD = tf.keras.layers.Dense(nMv, use_bias = False) # (*, nPv) -> (*, nMv)
+        
+        self.enable_i_component = enable_i_component        
+        self.enable_d_component = enable_d_component
+        
         
         if fix_sd:
 # This agent has the fixed standard deviation, sd, of the normal density function which represents the policy.
@@ -57,7 +63,26 @@ class ConcAgent(Agent, tf.keras.Model):
         obserbation = observationSequence.get(-1) # the latest observation
         y = obserbation.getValue() # (*, nPv)
         
-        _mu = self.gainP(y) * tf.math.exp(self._logScale) # (*, nMv)
+        Y = []
+        for obserbation in observationSequence:
+            Y.append(obserbation.getValue())
+        Ynumpy = np.stack(Y, axis=-1) # (*, nPv, nSeq)
+        nSeq = len(Y)
+        
+        if self.enable_i_component and nSeq > 1:
+            y_i = np.sum(Ynumpy, axis=-1) # (*, nPv)
+            _u_i = self.gainI(y_i) # (*, nMv)
+        else:
+            _u_i = tf.zeros(shape=())
+            
+        if self.enable_d_component and nSeq > 1:
+            t = np.linspace(-(nSeq-1)/2, (nSeq-1)/2, nSeq).astype(np.float32)
+            y_d = np.sum(Ynumpy * t, axis=-1)/np.sum(t*t) # (*, nPv)
+            _u_d = self.gainD(y_d) # (*, nMv)
+        else:
+            _u_d = tf.zeros(shape=())
+        
+        _mu = (self.gainP(y)+_u_i+_u_d) * tf.math.exp(self._logScale) # (*, nMv)
             
         _sd = tf.math.exp(self._logSd) # (1, nMv)
         _logSd = self._logSd # (1, nMv)
@@ -116,6 +141,16 @@ class ConcAgent(Agent, tf.keras.Model):
         
         param = dict()
         param["gain"] = (self.gainP.weights[0] * _scale).numpy() # (1, nMv)
+        if self.enable_i_component:
+            param["gainI"] = (self.gainI.weights[0] * _scale).numpy() # (1, nMv)
+        else:
+            param["gainI"] = np.nan
+            
+        if self.enable_d_component:
+            param["gainD"] = (self.gainD.weights[0] * _scale).numpy() # (1, nMv)
+        else:
+            param["gainD"] = np.nan
+        
         if self.use_bias:
             param["bias"] = (self.gainP.weights[1] * _scale).numpy() # (1, nMv)
         else:
