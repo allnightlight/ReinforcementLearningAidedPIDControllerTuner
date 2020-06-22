@@ -25,8 +25,13 @@ class Test(unittest.TestCase):
         nBatch = 2**5
         nMv = 10
         u = np.random.randn(nBatch, nMv)
+        
         action = ConcAction(u)
         assert isinstance(action, ConcAction)
+        
+        action = ConcAction(u, limitBy = "clamp")
+        assert isinstance(action, ConcAction)
+
 
     def test002(self):
         nMv = 10

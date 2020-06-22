@@ -169,6 +169,36 @@ class Test(unittest.TestCase):
         
         builder.build(buildOrders)
 
+    def test005(self):
+        
+        builder = self.builder        
+        
+        buildOrders = MyArray()            
+        buildOrder = ConcBuildOrder(nIteration=100
+                    , nSeq=2
+                    , nHorizonValueOptimization=1
+                    , nIntervalPolicyOptimization=10
+                    , nBatchPolicyOptimization=2**5
+                    , nSaveInterval=2**5
+                    , description="test"
+                    , tConstant = 10
+                    , nHiddenValueApproximator = 2**5
+                    , sdPolicy = 0.1
+                    , nActionsSampledFromPolicy = 2**1
+                    , amplitudeDv = 0.0
+                    , environmentName = "AsmSimulator"
+                    , asmPenaltyType = 0
+                    , asmWeightOnCost = 0.9
+                    , amplitudePeriodicDv= 2.0
+                    , agentEnableDcomponent = True
+                    , agentEnableIcomponent = True
+                    , agentLimitBy = "clamp"                    
+                    )
+        
+        buildOrders.add(buildOrder)
+        
+        builder.build(buildOrders)
+
         
 
 if __name__ == "__main__":
