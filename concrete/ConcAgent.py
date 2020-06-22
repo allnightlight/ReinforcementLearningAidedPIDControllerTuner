@@ -21,7 +21,7 @@ class ConcAgent(Agent, tf.keras.Model):
     checkpointFolderPath = "./checkpoint"
 
 
-    def __init__(self, nMv, sd, use_bias = True, fix_sd = True, fix_scale = True, enable_i_component = False, enable_d_component = False):
+    def __init__(self, nMv, sd, use_bias = True, fix_sd = True, fix_scale = True, enable_i_component = False, enable_d_component = False, limitBy = "tanh"):
         '''
         Constructor
         '''
@@ -39,6 +39,7 @@ class ConcAgent(Agent, tf.keras.Model):
         
         self.enable_i_component = enable_i_component        
         self.enable_d_component = enable_d_component
+        self.limitBy = limitBy
         
         
         if fix_sd:
@@ -105,7 +106,7 @@ class ConcAgent(Agent, tf.keras.Model):
         
         u = self.sampleMvFromPi(observationSequence) # (*, nMv)
                 
-        return ConcAction(u)
+        return ConcAction(u, limitBy = self.limitBy)
     
     def loglikelihood(self, observationSequence, action):
         
