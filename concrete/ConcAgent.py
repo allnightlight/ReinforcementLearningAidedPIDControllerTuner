@@ -30,7 +30,7 @@ class ConcAgent(Agent, tf.keras.Model):
         if fix_scale:
             self._logScale = tf.zeros(shape=(nMv,)) # (1, nMv)
         else:
-            self._logScale = tf.Variable(tf.random.normal(shape=(nMv,))) # (1, nMv)
+            self._logScale = tf.Variable(tf.zeros(shape=(nMv,))) # (1, nMv)
             
         self.nMv = nMv
         self.gainP = tf.keras.layers.Dense(nMv, use_bias = use_bias) # (*, nPv) -> (*, nMv)
