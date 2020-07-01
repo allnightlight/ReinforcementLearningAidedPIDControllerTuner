@@ -61,10 +61,10 @@ Table 4.1.1 Hyperparameters used in trainings
 | gamma | reward discount factor | 0.9 |
 | nSeq | the length of series to calculate derivative | 5 |
 | weightOnError | controls the priority against the regularization term  | 0.99 |
-| agentEnableDcomponent | False or True |
+| agentEnableDcomponent | control the type of controller between P- or PD-controller | False or True |
 
-<img src="./img/cs1f_error_features_boxplot2.png" widht = "480px"> 
+<img src="./img/cs1f_error_features_boxplot2.png" width = "480px"> 
 Figure 4.1.1: Learning Curves
 
-<img src="./img/cs1f_trend.png" widht = "480px"> 
-Figure 4.1.2: Simulation result of the response against the stepwise disturbance
+<img src="./img/cs1f_trend.png" width = "480px"> 
+Figure 4.1.2: Simulation results of the responses against the stepwise disturbance for P- and PD-controller, respectively
