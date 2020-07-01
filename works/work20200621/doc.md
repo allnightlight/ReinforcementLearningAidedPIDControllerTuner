@@ -55,3 +55,16 @@ for the two systems, respectively.
 It's observed that the rise time of the error in the case of PD-controller is shorter than the one in the case of P-controller.
 This means that the derivative factor contributes to the better responsiveness.
 
+Table 4.1.1 Hyperparameters used in trainings
+|name| description | value |
+|:----:|:----:|:----:|
+| gamma | reward discount factor | 0.9 |
+| nSeq | the length of series to calculate derivative | 5 |
+| weightOnError | controls the priority against the regularization term  | 0.99 |
+| agentEnableDcomponent | False or True |
+
+<img src="./img/cs1f_error_features_boxplot2.png" widht = "480px"> 
+Figure 4.1.1: Learning Curves
+
+<img src="./img/cs1f_trend.png" widht = "480px"> 
+Figure 4.1.2: Simulation result of the response against the stepwise disturbance
