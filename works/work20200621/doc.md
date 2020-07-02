@@ -68,3 +68,48 @@ Figure 4.1.1: Learning Curves
 
 <img src="./img/cs1f_trend.png" width = "480px"> 
 Figure 4.1.2: Simulation results of the responses against the stepwise disturbance for P- and PD-controller, respectively
+
+## 4-2. Case study #2:
+
+Here, we study hyperparameter of the reinforcement learning to influence the responsiveness against the error.
+It's supposed to choose the discount factor, `gamma` because of the following reason.
+First of all, the discount factor controls the priority of rewards alongside the time horizon, 
+in fact, seeing the definition of the discounted infinite sum of rewards,
+if the discount factor closes to 1 then, agents are oriented to the long term reward.
+In the constrast, with the smaller discount factor, still non negative, 
+agent seek for the short-term reward by diminishing the error as quickly as possible
+at the expense of large actions.
+That's the reasoning behind choosing the discount factorm as the control parameter of the responsiveness.
+
+The set of hyperparameters used in the trainig is shown in the table 4.2.1.
+Given that the discounting factor can be given as `1-1/T`, where `T` denotes the time constant of moving average of rewards,
+the options of the discount factors, 0.9, 0.95 and 0.975 are according to T = 10, 20 and 40, respectively.
+This interpretation enables easier understanding of the discount factor,
+in fact, the time constant can directly control the rise time of the response against the stepwise error.
+
+The figure 4.2.1 shows the learning curve of the trained agents as mentioned in the case study 1.
+All the performances of trained agents have been enough saturated, however,
+the agents with the discount factor closer to 1 are likely to converge more slowly.
+
+The simulated response of closed loop system controlled by instances selected from trained agents as in the case study 1
+are shown in the figure 4.2.2.
+The rise time of the response against stepwise disturbance controlled by trained agents 
+are shown in the figure 4.2.3.
+Both results tell us that,
+with the discount factor closer to 1, namely the longer time constant, 
+the rise time is longer.
+
+Table 4.2.1 Hyperparameters used in trainings
+|name| description | value |
+|:----:|:----:|:----:|
+| gamma | reward discount factor | 0.9, 0.95 and 0.975 |
+| nSeq | the length of series to calculate derivative | 5 |
+| weightOnError | controls the priority against the regularization term  | 0.99 |
+| agentEnableDcomponent | control the type of controller between P- or PD-controller | True(PD-controller only) |
+
+<img src="./img/cs2a_error_features_boxplot2.png" width = "480px"> 
+Figure 4.2.1: Learning Curves
+
+<img src="./img/cs2a_trend.png" width = "480px"> 
+Figure 4.2.2: Simulation results of the responses against the stepwise disturbance for the given discount factors, respectively
+
