@@ -113,3 +113,5 @@ Figure 4.2.1: Learning Curves
 <img src="./img/cs2a_trend.png" width = "480px"> 
 Figure 4.2.2: Simulation results of the responses against the stepwise disturbance for the given discount factors, respectively
 
+<img src="./img/cs2a_rise_time_boxplot.png" width = "480px"> 
+Figure 4.2.3: Rise times 
