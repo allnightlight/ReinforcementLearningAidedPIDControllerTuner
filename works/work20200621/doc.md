@@ -141,8 +141,8 @@ The learning curves of the trained parameters of policy  are shown in the figure
 And the figure 4.3.2(a) and (b) shows the learning curves of the performances of the trained agents,
 the magnitude of the error in the first and the rise time in the later.
 We observe as follows.
-- For all the cases, whether with the gaussian distributed noise or not or however small the regularization terms are, the training processes are converged. Though, in the case with the least regularization term, the learnings with the gaussian distributed noise are more stable than the ones without the noise.
-- when the regularization term goes smaller, the magnitudes of the proportional and derivative gains without the gaussian distributed noise become larger, which means that trained controllers response against the disturbance more quickly. The same thing can be confirmed in the gains trained under the environment with the noise. Comparing the gains tuned under environments without and with the noise, the absolute values of the first are larger than the ones of the later.
+- For all the cases, whether with or without the gaussian distributed noise or however small the regularization terms are, the training processes are converged. Though, in the case with the least regularization term, the learnings with the gaussian distributed noise are more stable than the ones without the noise.
+- When the regularization term goes smaller, the magnitudes of the proportional and derivative gains without the gaussian distributed noise become larger, which means that trained controllers response against the disturbance more quickly. The same thing can be confirmed in the gains trained under the environment with the noise. Comparing the gains tuned under environments without and with the noise, the absolute values of the first are larger than the ones of the later.
 - Rise times are very unstable and vulnable against the regularizationterm and the gaussian distributed noise generated in the environment. As alread mentioned in the above item, with the lighter regularization, generally speaking, we can acquire faster controller, however, the peformance of the quickness varies inside the single fixed parameter set.
 
 The first finding can interestingly imply that
@@ -158,7 +158,7 @@ Table 4.3.1 Hyperparameters used in trainings
 | gamma | reward discount factor | 0.9 |
 | nSeq | the length of series to calculate derivative | 5 |
 | weightOnError | controls the priority against the regularization term  | 0.5, 0.9 or 0.99 |
-| amplitudeDv | standard deviation of gaussian noise | 0 or 0.2 |
+| amplitudeDv | standard deviation of gaussian noise | 0 or 0.1 |
 | agentEnableDcomponent | control the type of controller between P- or PD-controller | True(PD-controller only) |
 
 <img src="./img/cs3c_p_gainD_distribution.png" width = "60%"> 
