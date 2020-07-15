@@ -35,16 +35,19 @@ The case studies shown in this text are hilighted as follow:
 
 ## 4-1. Case study #1: 
 
-This case study compares the behaviours of systems controlled by P- and PD-controller, respectively.
+This case study compares the behaviours of systems controlled by P- and PD-controller.
 The set of hyper parameters for the reinforcement learning is shown in the table 4.1.1.
-All the parameters used in the training except the parameter to enable the derivative factor are same between the two controllers.
-Around 10 agents of P-controller and PD-controller were trained, respectively, 
-in order to mitigate the uncertainty of trained controller parameters caused by the reinforcement learning.
+All the parameters used in the training except the parameter `agentEnableDcomponent`, 
+which controls using the derivative factor or not, 
+are same between the two controllers.
+Around 10 agents of P-controller and PD-controller were trained 
+in order to mitigate the uncertainty of trained controllers' parameters caused by the reinforcement learning.
 
-The learning curves for the two controllers can be seen in the figure 4.1.1.
-The performance of agent is evaluated by the following measurements of the error caused by the stepwise disturbance:
+The learning curves of performances for the two controllers can be seen in the figure 4.1.1.
+The performances of agent are evaluated by the following features of the error caused by the stepwise disturbance:
 - 95 percentile of the absolute value of the error, of which the value approximates the peak absolute value of the error except outliers
 - and 50 percentile of the absolute value of the error, of which the value approximates the average absolute value of the error except outliers.
+
 It's confirmed that the performances for the two controllers have been enough converged after the training iteration.
 
 The figure 4.1.2 shows the simulation results of the two systems, the one controlled by a trained P-controller
