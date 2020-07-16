@@ -72,24 +72,24 @@ Figure 4.1.2: Simulation results of the responses against the stepwise disturban
 
 ## 4-2. Case study #2:
 
-Here, we study hyperparameter of the reinforcement learning to influence the responsiveness against the error.
-It's supposed to choose the discount factor, `gamma` because of the following reasons.
+Here, we study hyperparameter of the reinforcement learning which can significantly influence the responsiveness against the error.
+It's supposed to choose the discount factor, `gamma`, because of the following reasons.
 First of all, the discount factor controls the priority of rewards alongside the time horizon, 
 in fact, 
 seeing the [definition of the discounted infinite sum of rewards](https://en.wikipedia.org/wiki/Reinforcement_learning#Criterion_of_optimality),
 if the discount factor closes to 1 then, agents are oriented to the long term reward.
 On the contrast, with the smaller discount factor, still non negative, 
-agent seeks for the short-term reward by diminishing the error as quickly as possible
+agent seeks for gaining reward in the short-term by diminishing the error as quickly as possible
 at the expense of large actions.
 That's the reasoning behind choosing the discount factor as the control parameter of the responsiveness.
 
 The set of hyperparameters used in the training is shown in the table 4.2.1.
 Given that the discounting factor can be given as `1-1/T`, where `T` denotes the time constant of a moving average of rewards,
-the options of the discount factors, 0.9, 0.95 and 0.975 are according to T = 10, 20 and 40, respectively.
+the options of discount factor, 0.9, 0.95 and 0.975, are according to the options of time constant, T = 10, 20 and 40, respectively.
 This interpretation enables easier understanding of the discount factor,
-in fact, the time constant can directly control the rise time of the response against the stepwise error.
+because the time constant can directly control the rise time of the response against the stepwise error.
 
-The figure 4.2.1 shows the learning curve of the performances of trained agents which are mentioned in the case study 1.
+The figure 4.2.1 shows the learning curve of the performances of trained agents by using the features which are mentioned in the case study 1.
 All the performances of trained agents have been enough saturated at the end of training iterations, however,
 the agents with the discount factor closer to 1 are likely to converge more slowly.
 
