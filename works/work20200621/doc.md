@@ -75,9 +75,10 @@ Figure 4.1.2: Simulation results of the responses against the stepwise disturban
 Here, we study hyperparameter of the reinforcement learning to influence the responsiveness against the error.
 It's supposed to choose the discount factor, `gamma` because of the following reason.
 First of all, the discount factor controls the priority of rewards alongside the time horizon, 
-in fact, seeing the definition of the discounted infinite sum of rewards,
+in fact, 
+seeing the [definition of the discounted infinite sum of rewards](https://en.wikipedia.org/wiki/Reinforcement_learning#Criterion_of_optimality),
 if the discount factor closes to 1 then, agents are oriented to the long term reward.
-In the constrast, with the smaller discount factor, still non negative, 
+On the constrast, with the smaller discount factor, still non negative, 
 agent seek for the short-term reward by diminishing the error as quickly as possible
 at the expense of large actions.
 That's the reasoning behind choosing the discount factorm as the control parameter of the responsiveness.
@@ -88,17 +89,17 @@ the options of the discount factors, 0.9, 0.95 and 0.975 are according to T = 10
 This interpretation enables easier understanding of the discount factor,
 in fact, the time constant can directly control the rise time of the response against the stepwise error.
 
-The figure 4.2.1 shows the learning curve of the trained agents as mentioned in the case study 1.
-All the performances of trained agents have been enough saturated, however,
+The figure 4.2.1 shows the learning curves of the performances of trained agents which are mentioned in the case study 1.
+All the performances of trained agents have been enough saturated at the end of training iterations, however,
 the agents with the discount factor closer to 1 are likely to converge more slowly.
 
-The simulated response of closed loop system controlled by instances selected from trained agents as in the case study 1
+The simulated response of closed loop system controlled by instances selected from trained agents with the same criteria used in the case study 1,
 are shown in the figure 4.2.2.
-The rise time of the response against stepwise disturbance controlled by trained agents 
+The rise time of response against stepwise disturbance controlled by trained agents 
 are shown in the figure 4.2.3.
 Both results tell us that,
 with the discount factor closer to 1, namely the longer time constant, 
-the rise time is longer.
+the rise time becomes longer.
 
 Table 4.2.1 Hyperparameters used in trainings
 |name| description | value |
