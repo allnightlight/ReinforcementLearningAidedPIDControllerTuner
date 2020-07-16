@@ -40,7 +40,7 @@ The set of hyper parameters for the reinforcement learning is shown in the table
 All the parameters used in the training except the parameter `agentEnableDcomponent`, 
 which controls using the derivative factor or not, 
 are same between the two controllers.
-Around 10 agents of P-controller and PD-controller were trained 
+Around 10 agents of P-controller and PD-controller were trained, respectively, 
 in order to mitigate the uncertainty of trained controllers' parameters caused by the reinforcement learning.
 
 The learning curves of performances for the two controllers can be seen in the figure 4.1.1.
@@ -48,12 +48,11 @@ The performances of agent are evaluated by the following features of the error c
 - 95 percentile of the absolute value of the error, of which the value approximates the peak absolute value of the error except outliers
 - and 50 percentile of the absolute value of the error, of which the value approximates the average absolute value of the error except outliers.
 
-It's confirmed that the performances for the two controllers have been enough converged after the training iteration.
+It's confirmed that the performances for the two controllers have been enough converged at the end of the training iterations.
 
 The figure 4.1.2 shows the simulation results of the two systems, the one controlled by a trained P-controller
-and the other controlled by a trained PD-controller, where the controllers with the medium performance are selected.
-The two pairs of the action and the error trend observed in the figure show the responses against the stepwise disturbance
-for the two systems, respectively.
+and the other controlled by a trained PD-controller, where each controllers are selected among the trained ones with the medium 50 percentile absolute error.
+The figure contains the two pairs of the action and the error trend of the responses against the stepwise disturbance.
 It's observed that the rise time of the error in the case of PD-controller is shorter than the one in the case of P-controller.
 This means that the derivative factor contributes to the better responsiveness.
 
