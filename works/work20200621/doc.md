@@ -11,10 +11,10 @@ the response against stepwise disturbance
 is improved by the derivative factor
 since any abrupt change of error multiplies the action
 via the derivative factor and then the stepwise error can be diminished quickly.
+Therefore, we choose the responsiveness of controller as the criteria of out controller design.
 
-Therefore, we regard the responsiveness of controller as an important criteria
-and we study the hyperparameters of the reinforcement learning 
-which have the impact on the responsiveness of controller
+We study the hyperparameters of the reinforcement learning 
+which have the impact on the criteria
 in order to design the PD-controller properly.
 
 # 2. Specifications
