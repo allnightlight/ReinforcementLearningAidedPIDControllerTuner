@@ -78,15 +78,14 @@ First of all, the discount factor controls the priority of rewards alongside the
 in fact, 
 seeing the [definition of the discounted infinite sum of rewards](https://en.wikipedia.org/wiki/Reinforcement_learning#Criterion_of_optimality),
 if the discount factor closes to 1 then, agents are oriented to the long term reward.
-On the contrast, with the smaller discount factor, still non negative, 
-agent seeks for gaining reward in the short-term by diminishing the error as quickly as possible
-at the expense of large actions.
+In contrast, with the smaller discount factor, still non negative, 
+agent seeks for gaining reward in the short-term by diminishing the error as quickly as possible.
 That's the reasoning behind choosing the discount factor as the control parameter of the responsiveness.
 
-The set of hyperparameters used in the training is shown in the table 4.2.1.
+The set of hyperparameters used in the trainings is shown in the table 4.2.1.
 Given that the discounting factor can be given as `1-1/T`, where `T` denotes the time constant of a moving average of rewards,
 the options of discount factor, 0.9, 0.95 and 0.975, are according to the options of time constant, T = 10, 20 and 40, respectively.
-This interpretation enables easier understanding of the discount factor,
+This interpretation enables to understand the discount factor easily,
 because the time constant can directly control the rise time of the response against the stepwise error.
 
 The figure 4.2.1 shows the learning curve of the performances of trained agents by using the features which are mentioned in the case study 1.
