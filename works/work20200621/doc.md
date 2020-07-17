@@ -126,31 +126,33 @@ and then leads to less sensitive controller against disturbances.
 
 The weight parameter, which is the proportional rate to combine the two reward components, say, 
 the absolute value of the error and the one of the action, can work as the regularization parameter.
-Here, we study how the weight parameter affects the responsiveness against the disturbance and 
-how it stabilises learning processes.
+Here, we study how the weight parameter can affect the responsiveness against the disturbance and 
+how it can stabilise learning processes.
 
 The following two environments are considered.
-- the environment with the stepwise disturbance,
+- The environment with the stepwise disturbance,
 - and the one with the stepwise disturbance and also the gaussian distributed noise.
+
 Thinking about the second environment can not be skipped
-because the counter effect from less regularization, which is the vulnarability against the gaussian distributed noise, should be checked.
+because the counter effect by less regularization, which is the vulnarability against the gaussian distributed noise, should be checked.
 
 The hyperparameters used in the training are shown in the table 4.3.1.
 The weigt parameter, namely `weightOnError`, is chose from the three options,
 where with the value closer to 1 the regularization gets smaller.
 
-The learning curves of the trained parameters of policy  are shown in the figure 4.3.1(a),(b) and (c).
-And the figure 4.3.2(a) and (b) shows the learning curves of the performances of the trained agents,
-the magnitude of the error in the first and the rise time in the later.
+The learning curves of the parameters of trained agents are shown in the figure 4.3.1(a),(b) and (c).
+And the figure 4.3.2(a) and (b) shows the learning curves of the features of the error and the rise time, respectively.
 We observe as follows.
-- For all the cases, whether with or without the gaussian distributed noise or however small the regularization terms are, the training processes are converged. Though, in the case with the least regularization term, the learnings with the gaussian distributed noise are more stable than the ones without the noise.
+- For all the cases, whether with or without the gaussian distributed noise or however small the regularization terms are, the training processes have been converged at the end of training iterations. Though, in the case with the least regularization term, `weightOnError=0.99`, the learnings with the gaussian distributed noise are more stable than the ones without the noise.
 - When the regularization term goes smaller, the magnitudes of the proportional and derivative gains without the gaussian distributed noise become larger, which means that trained controllers response against the disturbance more quickly. The same thing can be confirmed in the gains trained under the environment with the noise. Comparing the gains tuned under environments without and with the noise, the absolute values of the first are larger than the ones of the later.
 - Rise times are very unstable and vulnable against the regularizationterm and the gaussian distributed noise generated in the environment. As alread mentioned in the above item, with the lighter regularization, generally speaking, we can acquire faster controller, however, the peformance of the quickness varies inside the single fixed parameter set.
+- The lighter the weight parameter is, the smaller Rise time is.The median value of rise time with the lightest regularization term, 15, is shorter than the one with the medium regularization term, 55 and also than the one with the largest regularization term, 80.This fact is consistent with the second finding.However, the rise times, especially with the lightest regularization and trained under the environment without the Gaussian noise, are unstable.They distributed from 0 to nearly 40.
 
 The first finding can interestingly imply that
 the regularization term can be replaced by the disturbance of the environment
 and furthermore that, thiking that noises are generally accompanied with environments,
 it's not mandate to add the regularization term in the reinforcement learning framework.
+
 And according to the third finding, it's hard to evaluate the responsiveness against the stepwise disturbance
 by using the rise time. This criteria is too sensitive to trained parameters.
 
@@ -164,16 +166,16 @@ Table 4.3.1 Hyperparameters used in trainings
 | agentEnableDcomponent | control the type of controller between P- or PD-controller | True(PD-controller only) |
 
 <img src="./img/cs3c_p_gainD_distribution.png" width = "60%"> 
-Figure 4.3.1(a): the learning curve of the trained derivative gains
+Figure 4.3.1(a): Learning curves of the trained derivative gains
 
 <img src="./img/cs3c_p_gainP_distribution.png" width = "60%"> 
-Figure 4.3.1(b): the learning curve of the trained proportional gains
+Figure 4.3.1(b): Learning curves of the trained proportional gains
 
 <img src="./img/cs3c_policy_sd_distribution.png" width = "60%"> 
-Figure 4.3.1(c): the learning curve of the trained standard deviation of the noise generated by agents
+Figure 4.3.1(c): Learning curves of the trained standard deviation of the noise generated by agents
 
 <img src="./img/cs3c_error_features_boxplot2.png" width = "60%"> 
-Figure 4.3.2(a): the learning curve of the error
+Figure 4.3.2(a): Learning Curves of trained agents' performances
 
 <img src="./img/cs3c_rise_time_boxplot.png" width = "60%"> 
-Figure 4.3.2(b): the learning curve of the rise time
+Figure 4.3.2(b): Learning Curves of rise times of trained controllers
