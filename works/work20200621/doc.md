@@ -27,9 +27,9 @@ where the length of the series of errors is specified by a parameter: $nSeq$.
 
 # 3. Highlights of case studies
 The case studies shown in this text are hilighted as follow:
-- The case study #1 compares the behaviours of P- and PD-controller with a set of hyper parameter by observing trends of response to the stepwise disturbance.
-- The case study #2 shows the diffrence depending on the discount factor, one of the reinforcement learning hyperparameter, which controls the weight on the reward over the time horizon, more precisely say that the closer the discount factor is to 1 and the longer the time horizon is and then, less quickly the agent responses against the error.
-- The case study #3 looks through the effect of the regularation parameter in order to investigate the expense of the responsiveness of controller.
+- The case study #1 compares the behaviours of P- and PD-controller with a set of hyper parameter by observing trends of response against the stepwise disturbance.
+- The case study #2 shows the consequence by choosing the discount factor, one of the reinforcement learning hyperparameters, which controls the weight on the reward alongside the time horizon, more precisely say that the time horizon is longer with the discount factor closer to 1. This parameter allows for tuning the responsiveness of controller against the stepwise disturbance.
+- The case study #3 investigates the dependency of the regularization term on the responsiveness of the controller against the stepwise disturbance. By choosing this parameter properly, the responsiveness of controller can be tuned, but side effects cannot be overlooked.
 
 # 4. Case studies
 
