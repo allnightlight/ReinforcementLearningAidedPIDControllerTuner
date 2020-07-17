@@ -3,17 +3,17 @@
 # 1. Introduction
 
 We study how the PD-controller trained by the reinforcement learning algorithm works
-and how to design the controller
-by investigating the following case studies.
+and how to design the controller.
 
 It's expected that 
 the response against stepwise disturbance 
 is improved by the derivative factor
 since any abrupt change of error multiplies the action
 via the derivative factor and then the stepwise error can be diminished quickly.
-Therefore, we choose the responsiveness of controller as the criteria of out controller design.
+Therefore, we choose the responsiveness of controller as the criteria of our controller design.
 
-We study the hyperparameters of the reinforcement learning 
+In the following case studies,
+we investigate the hyperparameters of the reinforcement learning 
 which have the impact on the criteria
 in order to design the PD-controller properly.
 
