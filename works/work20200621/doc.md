@@ -1,20 +1,21 @@
 
 
 # 1. Introduction
-In the following case studies,
-the effect of PD-controller is investigated 
-by comparing the behaviours between the system controlled by P-controller
-and the ones contorlled by PD-controller.
 
-It's supposed that 
+We study how the PD-controller trained by the reinforcement learning algorithm works
+and how to design the controller
+by investigating the following case studies.
+
+It's expected that 
 the response against stepwise disturbance 
 is improved by the derivative factor
-since any abrubt change of error amplifies the action
-via the derivative factor and the stepwise error can be diminished more quickly  than in the case of controlling by P-controller.
+since any abrupt change of error multiplies the action
+via the derivative factor and then the stepwise error can be diminished quickly.
 
-In this short text,
-the responsiveness of the PD-controller is compared with the one of the P-controller
-and also we see how the responsiveness depends on the hyperparameter of the Reinforcement Learning.
+Therefore, we regard the responsiveness of controller as an important criteria
+and we study the hyperparameters of the reinforcement learning 
+which have the impact on the responsiveness of controller
+in order to design the PD-controller properly.
 
 # 2. Specifications
 
