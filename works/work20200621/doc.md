@@ -19,12 +19,47 @@ in order to design the PD-controller properly.
 
 # 2. Specifications
 
-## 2-1. Agent, namely Controller
-The specification of agent is here.
-Action consists of the following twofold,
-the proportional term obtained by multiplying a value of error by a proportional gain
-and the derivative term obtained by multiplying a derivative gain and a value of slope over the specific length time series of error, 
-where the length of the series of errors is specified by a parameter: $nSeq$.
+## Agent
+
+This study implemented the agent as the form of the P-controller and the one of the PD-controller, respectively,
+which means that 
+- the agent output continuous actions,
+- actions are proportional to observations of the environment with the constant proportional rate, so-called proportional gain,
+- and, only for the PD-controller, the slope of time series of observations after multiplying the derivative gain is added on the action.
+
+Other than those features, 
+- the agent adds random values following the normal distribution 
+	- with the variable standard deviation on actions,
+- actions pass through the maxout and minout filter before being acted on the environment in order to make the tuning process stable.
+
+## Environment
+
+The features of the environment are followed as below:
+- it's described by the first-order time-delay system with the fixed time constant = 10,
+- it's driven 
+	- by manipulating values given by the agent 
+	- and also by disturbance switching from -1 to 1 and vice versa with the fixed interval = 30,
+- it outputs the state variable as the observation.
+
+Note that the observation is regarded as the error from the regulated value = 0, which will be minimized by the controller.
+
+## Reward
+
+Reward consists of the twofold parts:
+- the absolute value of the observation(namely the error),
+- the absolute value of actions.
+
+It's the weight parameter on the error against the action, 
+called just the weight parameter,
+by which the two components are added.
+For example, the value = 0.9 means prioritising the regulation of the error rather than the cost of action,
+while the value = 0.1 means reducing the cost of action at the expense of high error.
+
+## Return
+
+Given the agent and the environment, Return is defined as 
+the expected one of the summation of the infinite reward series with a discounting factor.
+The Actor Critic methods minimize the value of the Return.
 
 # 3. Highlights of case studies
 The case studies shown in this text are hilighted as follow:
